@@ -1,17 +1,14 @@
-import { useState } from 'react'
+import { Login } from "./components/Login"
+import { Register } from "./components/Register"
 
-import './App.css'
-
-function App() {
-  //const [count, setCount] = useState(0)
-
+const App = () => {
+    // <Login/> Para probar login reemplazar el regiser por el login.
   return (
     <main>
-      <h1>Iniciar seccion</h1>
-      
-
+      <Register/>
     </main>
   )
+
 }
 
 export default App
