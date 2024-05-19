@@ -1,5 +1,6 @@
 import { Button, Stack, TextField } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import "../login.css";
 
 export const Register = ({ toggleScreen }) => {
@@ -7,6 +8,7 @@ export const Register = ({ toggleScreen }) => {
   const [inputPassword, setInputPassword] = useState('');
   const [nameUser, setNameUser] = useState('');
   const [error, setError] = useState({ activate: false, message: "" });
+  const navigate = useNavigate();
 
   const handlerEmail = (event) => {
     const newInput = event.target.value;
@@ -35,7 +37,7 @@ export const Register = ({ toggleScreen }) => {
     }
     setError({ activate: false, message: "" });
     console.log("Enviados: inputEmail:", inputEmail, "inputPassword:", inputPassword);
-    toggleScreen('menu');  // Navega al menú principal después de registrarse correctamente
+    navigate('/menu');
   };
 
   return (
