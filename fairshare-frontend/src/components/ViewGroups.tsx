@@ -4,9 +4,11 @@ import { Typography, Card, CardContent, List, ListItem, ListItemText, Box, Divid
 export const ViewGroups = ({ groups, toggleScreen }) => {
   return (
     <div>
-      <Typography variant="h5" gutterBottom>Grupos creados</Typography>
+      <div>
+        <h1>Grupos creados</h1>
+      </div>
       {groups.length === 0 ? (
-        <Typography>No hay grupos creados.</Typography>
+        <center><Typography>No hay grupos creados.</Typography></center>
       ) : (
         <Box>
           {groups.map((group, index) => (

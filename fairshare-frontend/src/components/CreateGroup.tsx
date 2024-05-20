@@ -32,7 +32,9 @@ export const CreateGroup = ({ addGroup, toggleScreen }) => {
 
   return (
     <div>
-      <Typography variant="h5" gutterBottom>Crear un grupo</Typography>
+      <div>
+        <h1>Crear un grupo</h1>
+      </div>
       <form style={{ marginTop: '0rem' }} onSubmit={handleSubmit}>
         <TextField
           label="Nombre del Grupo"

@@ -3,7 +3,9 @@ import { Drawer, List, ListItem, ListItemText, AppBar, Toolbar, Typography, CssB
 import { CreateExpense } from './CreateExpense';
 import { ViewExpenses } from './ViewExpenses';
 import { CreateGroup } from './CreateGroup';
-import { ViewGroups } from './ViewGroups'; // Importa el componente ViewGroups
+import { ViewGroups } from './ViewGroups';
+import { CreateDebt } from './CreateDebt';
+import { ViewDebts } from './ViewDebts';
 
 const drawerWidth = 240;
 
@@ -39,9 +41,6 @@ export const MainLayout = ({ screen, toggleScreen, addExpense, expenses }) => {
           <ListItem button onClick={() => toggleScreen('createDebt')} style={{ paddingLeft: '32px' }}>
             <ListItemText primary="Crear una deuda" />
           </ListItem>
-          <ListItem button onClick={() => toggleScreen('payDebt')} style={{ paddingLeft: '32px' }}>
-            <ListItemText primary="Pagar una deuda" />
-          </ListItem>
           <ListItem button onClick={() => toggleScreen('viewDebts')} style={{ paddingLeft: '32px' }}>
             <ListItemText primary="Visualizar las deudas" />
           </ListItem>
@@ -71,8 +70,9 @@ export const MainLayout = ({ screen, toggleScreen, addExpense, expenses }) => {
           {screen === 'createExpense' && <CreateExpense addExpense={addExpense} toggleScreen={toggleScreen} />}
           {screen === 'viewExpenses' && <ViewExpenses expenses={expenses} toggleScreen={toggleScreen} />}
           {screen === 'createGroup' && <CreateGroup addGroup={addGroup} toggleScreen={toggleScreen} />}
-          {screen === 'createDebt' && <CreateDebt toggleScreen={toggleScreen} />}
           {screen === 'viewGroups' && <ViewGroups groups={groups} toggleScreen={toggleScreen} />}
+          {screen === 'createDebt' && <CreateDebt toggleScreen={toggleScreen} />}
+          {screen === 'viewDebts' && <ViewDebts toggleScreen={toggleScreen} />}
         </div>
       </main>
     </div>
