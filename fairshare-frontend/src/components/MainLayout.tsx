@@ -11,9 +11,14 @@ const drawerWidth = 240;
 
 export const MainLayout = ({ screen, toggleScreen, addExpense, expenses }) => {
   const [groups, setGroups] = useState([]);
+  const [debts, setDebts] = useState([]);
 
   const addGroup = (group) => {
     setGroups([...groups, group]);
+  };
+
+  const addDebt = (debt) => {
+    setDebts([...debts, debt]);
   };
 
   const drawer = (
@@ -71,8 +76,8 @@ export const MainLayout = ({ screen, toggleScreen, addExpense, expenses }) => {
           {screen === 'viewExpenses' && <ViewExpenses expenses={expenses} toggleScreen={toggleScreen} />}
           {screen === 'createGroup' && <CreateGroup addGroup={addGroup} toggleScreen={toggleScreen} />}
           {screen === 'viewGroups' && <ViewGroups groups={groups} toggleScreen={toggleScreen} />}
-          {screen === 'createDebt' && <CreateDebt toggleScreen={toggleScreen} />}
-          {screen === 'viewDebts' && <ViewDebts toggleScreen={toggleScreen} />}
+          {screen === 'createDebt' && <CreateDebt toggleScreen={toggleScreen} groups={groups} addDebt={addDebt} />}
+          {screen === 'viewDebts' && <ViewDebts debts={debts} toggleScreen={toggleScreen} />}
         </div>
       </main>
     </div>
