@@ -2,10 +2,18 @@ import { useState } from 'react';
 import { Drawer, List, ListItem, ListItemText, AppBar, Toolbar, Typography, CssBaseline } from '@mui/material';
 import { CreateExpense } from './CreateExpense';
 import { ViewExpenses } from './ViewExpenses';
+import { CreateGroup } from './CreateGroup';
+import { ViewGroups } from './ViewGroups'; // Importa el componente ViewGroups
 
 const drawerWidth = 240;
 
 export const MainLayout = ({ screen, toggleScreen, addExpense, expenses }) => {
+  const [groups, setGroups] = useState([]);
+
+  const addGroup = (group) => {
+    setGroups([...groups, group]);
+  };
+
   const drawer = (
     <div>
       <Toolbar />
@@ -15,12 +23,30 @@ export const MainLayout = ({ screen, toggleScreen, addExpense, expenses }) => {
         </ListItem>
         <List component="div" disablePadding style={{ display: 'block' }}>
           <ListItem button onClick={() => toggleScreen('createExpense')} style={{ paddingLeft: '32px' }}>
-            {/* Añadimos un margen izquierdo */}
-            <ListItemText primary="Crear un gasto personal" />
+            <ListItemText primary="Crear un gasto" />
           </ListItem>
           <ListItem button onClick={() => toggleScreen('viewExpenses')} style={{ paddingLeft: '32px' }}>
-            {/* Añadimos un margen izquierdo */}
-            <ListItemText primary="Ver gastos existentes" />
+            <ListItemText primary="Visualizar gastos existentes" />
+          </ListItem>
+        </List>
+        <ListItem>
+          <ListItemText primary="Deudas grupales" />
+        </ListItem>
+        <List component="div" disablePadding style={{ display: 'block' }}>
+          <ListItem button onClick={() => toggleScreen('createGroup')} style={{ paddingLeft: '32px' }}>
+            <ListItemText primary="Crear un grupo" />
+          </ListItem>
+          <ListItem button onClick={() => toggleScreen('createDebt')} style={{ paddingLeft: '32px' }}>
+            <ListItemText primary="Crear una deuda" />
+          </ListItem>
+          <ListItem button onClick={() => toggleScreen('payDebt')} style={{ paddingLeft: '32px' }}>
+            <ListItemText primary="Pagar una deuda" />
+          </ListItem>
+          <ListItem button onClick={() => toggleScreen('viewDebts')} style={{ paddingLeft: '32px' }}>
+            <ListItemText primary="Visualizar las deudas" />
+          </ListItem>
+          <ListItem button onClick={() => toggleScreen('viewGroups')} style={{ paddingLeft: '32px' }}>
+            <ListItemText primary="Ver Grupos" />
           </ListItem>
         </List>
       </List>
@@ -40,11 +66,13 @@ export const MainLayout = ({ screen, toggleScreen, addExpense, expenses }) => {
       <Drawer variant="permanent" style={{ width: drawerWidth, flexShrink: 0 }}>
         {drawer}
       </Drawer>
-      <main style={{ flexGrow: 1, padding: '3rem', marginLeft: `${drawerWidth}px`, marginTop: '3rem' }}> {/* Added marginTop */}
+      <main style={{ flexGrow: 1, padding: '3rem', marginLeft: `${drawerWidth}px`, marginTop: '3rem' }}>
         <div style={{ maxWidth: '400px', width: '100%' }}>
-          {/* Limitamos el ancho del contenido */}
           {screen === 'createExpense' && <CreateExpense addExpense={addExpense} toggleScreen={toggleScreen} />}
           {screen === 'viewExpenses' && <ViewExpenses expenses={expenses} toggleScreen={toggleScreen} />}
+          {screen === 'createGroup' && <CreateGroup addGroup={addGroup} toggleScreen={toggleScreen} />}
+          {screen === 'createDebt' && <CreateDebt toggleScreen={toggleScreen} />}
+          {screen === 'viewGroups' && <ViewGroups groups={groups} toggleScreen={toggleScreen} />}
         </div>
       </main>
     </div>

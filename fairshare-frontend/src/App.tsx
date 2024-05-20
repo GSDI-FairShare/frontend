@@ -28,6 +28,8 @@ const App = () => {
       <Route path="/menu" element={<MainLayout toggleScreen={toggleScreen} addExpense={addExpense} expenses={expenses} screen="menu" />} />
       <Route path="/createExpense" element={<MainLayout toggleScreen={toggleScreen} addExpense={addExpense} expenses={expenses} screen="createExpense" />} />
       <Route path="/viewExpenses" element={<MainLayout toggleScreen={toggleScreen} addExpense={addExpense} expenses={expenses} screen="viewExpenses" />} />
+      <Route path="/createGroup" element={<MainLayout toggleScreen={toggleScreen} addExpense={addExpense} expenses={expenses} screen="createGroup" />} />
+      <Route path="/viewGroups" element={<MainLayout toggleScreen={toggleScreen} addExpense={addExpense} expenses={expenses} screen="viewGroups" />} />
     </Routes>
   );
 };
