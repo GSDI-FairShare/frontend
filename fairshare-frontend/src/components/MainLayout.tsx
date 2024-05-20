@@ -6,12 +6,14 @@ import { CreateGroup } from './CreateGroup';
 import { ViewGroups } from './ViewGroups';
 import { CreateDebt } from './CreateDebt';
 import { ViewDebts } from './ViewDebts';
+import { PayDebt } from './PayDebt';
 
 const drawerWidth = 240;
 
 export const MainLayout = ({ screen, toggleScreen, addExpense, expenses }) => {
   const [groups, setGroups] = useState([]);
   const [debts, setDebts] = useState([]);
+  const [selectedDebt, setSelectedDebt] = useState(null);
 
   const addGroup = (group) => {
     setGroups([...groups, group]);
@@ -77,7 +79,8 @@ export const MainLayout = ({ screen, toggleScreen, addExpense, expenses }) => {
           {screen === 'createGroup' && <CreateGroup addGroup={addGroup} toggleScreen={toggleScreen} />}
           {screen === 'viewGroups' && <ViewGroups groups={groups} toggleScreen={toggleScreen} />}
           {screen === 'createDebt' && <CreateDebt toggleScreen={toggleScreen} groups={groups} addDebt={addDebt} />}
-          {screen === 'viewDebts' && <ViewDebts debts={debts} toggleScreen={toggleScreen} />}
+          {screen === 'viewDebts' && <ViewDebts debts={debts} toggleScreen={toggleScreen} setSelectedDebt={setSelectedDebt} />}
+          {screen === 'payDebt' && <PayDebt selectedDebt={selectedDebt} toggleScreen={toggleScreen} />}
         </div>
       </main>
     </div>

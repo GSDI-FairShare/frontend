@@ -32,6 +32,7 @@ const App = () => {
       <Route path="/viewGroups" element={<MainLayout toggleScreen={toggleScreen} addExpense={addExpense} expenses={expenses} screen="viewGroups" />} />
       <Route path= "/viewDebts" element={<MainLayout toggleScreen={toggleScreen} addExpense={addExpense} expenses={expenses} screen="viewDebts" />} />
       <Route path="/createDebt" element={<MainLayout toggleScreen={toggleScreen} addExpense={addExpense} expenses={expenses} screen="createDebt" />} />
+      <Route path="/payDebt" element={<MainLayout toggleScreen={toggleScreen} addExpense={addExpense} expenses={expenses} screen="payDebt" />} />
     </Routes>
   );
 };
