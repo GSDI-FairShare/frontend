@@ -1,6 +1,7 @@
 import { Stack, TextField, Button } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import "../login.css";
 
 export const Login = ({ toggleScreen }) => {
@@ -19,10 +20,10 @@ export const Login = ({ toggleScreen }) => {
     setInputPassword(newInput);
   };
 
-  const handlerSubmit = (event) => {
+  const handlerSubmit = async (event) => {
     event.preventDefault();
-    if (inputEmail.includes('@') === false) {
-      setError({ activate: true, message: "Error: El email deberia incluir un @" });
+    if (!inputEmail.includes('@')) {
+      setError({ activate: true, message: "Error: El email debería incluir un @" });
       return;
     }
     if (inputPassword.length < 6) {
@@ -30,8 +31,24 @@ export const Login = ({ toggleScreen }) => {
       return;
     }
     setError({ activate: false, message: "" });
-    console.log("Enviados: inputEmail:", inputEmail, "inputPassword:", inputPassword);
-    navigate('/menu');
+
+    try {
+      const formData = new URLSearchParams();
+      formData.append('username', inputEmail);
+      formData.append('password', inputPassword);
+
+      const response = await axios.post('http://0.0.0.0:5000/signin', formData, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
+
+      console.log("Token:", response.data.access_token);
+      navigate('/menu');
+    } catch (error) {
+      console.error("Error during sign in:", error);
+      setError({ activate: true, message: "Error: Invalid email or password" });
+    }
   };
 
   return (
@@ -41,7 +58,7 @@ export const Login = ({ toggleScreen }) => {
         <TextField id="inputEmail" onChange={handlerEmail} label="Email" variant="outlined" size='medium' />
         <TextField id="inputPassword" onChange={handlerPassword} type='password' label="Contraseña" variant="outlined" />
         {error.activate && <p className='login__error'>{error.message}</p>}
-        <Button onClick={handlerSubmit} size='large' variant="contained">Iniciar sesión</Button>
+        <Button type="submit" size='large' variant="contained">Iniciar sesión</Button>
         <Button onClick={() => toggleScreen('register')} size='large' variant="contained">No tienes una cuenta? 👉 Regístrate</Button>
         <Button onClick={() => toggleScreen('forgotPassword')} size='large' variant="contained">Recuperar contraseña</Button>
       </Stack>
