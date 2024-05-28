@@ -43,7 +43,9 @@ export const Login = ({ toggleScreen }) => {
         }
       });
 
-      console.log("Token:", response.data.access_token);
+      const token = response.data.access_token;
+      localStorage.setItem('token', token); // Guardar el token en localStorage
+
       navigate('/menu');
     } catch (error) {
       console.error("Error during sign in:", error);
