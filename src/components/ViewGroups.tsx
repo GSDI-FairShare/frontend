@@ -1,13 +1,49 @@
-import React from 'react';
-import { Typography, Card, CardContent, List, ListItem, ListItemText, Box, Divider } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Typography, Card, CardContent, Box, Divider } from '@mui/material';
+import axios from 'axios';
 
-export const ViewGroups = ({ groups, toggleScreen }) => {
+export const ViewGroups = ({ toggleScreen }) => {
+  const [groups, setGroups] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const token = localStorage.getItem('token'); // Get the auth token from localStorage
+
+        if (!token) {
+          setError("Error: Usuario no autenticado");
+          return;
+        }
+
+        const response = await axios.get('http://localhost:5000/groups', {
+          headers: {
+            'Authorization': `Bearer ${token}` // Include the token in the Authorization header
+          }
+        });
+
+        setGroups(response.data);
+      } catch (error) {
+        console.error("Error al obtener los grupos:", error);
+        if (error.response && error.response.data) {
+          setError(error.response.data.detail);
+        } else {
+          setError("Error: No se pudieron obtener los grupos. Por favor, inténtelo de nuevo.");
+        }
+      }
+    };
+
+    fetchGroups();
+  }, []);
+
   return (
     <div>
       <div>
         <h1>Grupos creados</h1>
       </div>
-      {groups.length === 0 ? (
+      {error ? (
+        <center><Typography>{error}</Typography></center>
+      ) : groups.length === 0 ? (
         <center><Typography>No hay grupos creados.</Typography></center>
       ) : (
         <Box>
@@ -16,20 +52,12 @@ export const ViewGroups = ({ groups, toggleScreen }) => {
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>{group.name}</Typography>
-                  <Divider />
-                  <List>
-                    {group.members.map((member, idx) => (
-                      <ListItem key={idx} disableGutters>
-                        <ListItemText 
-                          primary={
-                            <Box component="span" sx={{ wordBreak: 'break-word' }}>
-                              {member}
-                            </Box>
-                          } 
-                        />
-                      </ListItem>
-                    ))}
-                  </List>
+                  {group.description && (
+                    <>
+                      <Divider />
+                      <Typography variant="body2" color="textSecondary">{group.description}</Typography>
+                    </>
+                  )}
                 </CardContent>
               </Card>
             </Box>
