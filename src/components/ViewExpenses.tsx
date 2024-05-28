@@ -58,7 +58,7 @@ export const ViewExpenses = ({ toggleScreen }) => {
                                 {sortedExpenses.map((expense, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{expense.date}</TableCell>
-                                        <TableCell>{expense.name}</TableCell>
+                                        <TableCell>{expense.description}</TableCell>
                                         <TableCell align="right">${expense.amount}</TableCell>
                                     </TableRow>
                                 ))}
