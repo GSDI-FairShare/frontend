@@ -54,6 +54,10 @@ export const Register = ({ toggleScreen }) => {
       });
 
       console.log("Registro exitoso:", response.data);
+      
+      const token = response.data.access_token;
+      localStorage.setItem('token', token); // Guardar el token en localStorage
+      
       navigate('/menu');
     } catch (error) {
       console.error("Error durante el registro:", error);
