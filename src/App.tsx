@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { Login } from "./components/Login";
 import { Register } from "./components/Register";
 import { ForgotPassword } from "./components/ForgotPassword";
 import { MainLayout } from "./components/MainLayout";
-import { CreateExpense } from './components/CreateExpense';
-import { ViewExpenses } from './components/ViewExpenses';
 
 const App = () => {
   const [expenses, setExpenses] = useState([]);
