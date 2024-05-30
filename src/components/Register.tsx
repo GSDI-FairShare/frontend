@@ -15,9 +15,7 @@ export const Register = ({ toggleScreen }) => {
     if (! isValidBasicEmailPassword() || !isValidUserName()){
       return;
     }
-
     setError({ activate: false, message: "" });
-    
     try {
       registerAUser(userName, inputEmail, inputPassword, toggleScreen);
     } catch (error) {

@@ -14,7 +14,7 @@ export const UseEmailAndPassword = (setError) => {
         setInputPassword(newInput);
     };
     
-    const isValidBasicEmailPassword = () => {
+    const isValidBasicEmailPassword = () :boolean => {
         if (!inputEmail.includes('@')) {
             setError({ activate: true, message: "Error: El email debería incluir un @" });
             return false;

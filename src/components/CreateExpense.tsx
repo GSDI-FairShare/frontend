@@ -1,53 +1,20 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Stack, TextField } from "@mui/material";
-import axios from 'axios';
+import { UseExpense } from "../hooks/useExpense";
+import { createAExpensePersonal } from "../services/expenses";
 
 export const CreateExpense = ({ toggleScreen }) => {
-    const [expenseDate, setExpenseDate] = useState('');
-    const [description, setDescription] = useState('');
-    const [amount, setAmount] = useState('');
     const [error, setError] = useState({ activate: false, message: "" });
-
-    const handleDateChange = (event) => {
-        setExpenseDate(event.target.value);
-    };
-
-    const handleDescriptionChange = (event) => {
-        setDescription(event.target.value);
-    };
-
-    const handleAmountChange = (event) => {
-        setAmount(event.target.value);
-    };
+    const {expenseDate, description, amount, handleDateChange, 
+            handleDescriptionChange, handleAmountChange, isValidExpense } = UseExpense(setError);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (!expenseDate || !description || !amount) {
-            setError({ activate: true, message: "Error: Todos los campos son obligatorios" });
+        if (!isValidExpense()) {
             return;
         }
-
         try {
-            const token = localStorage.getItem('token'); // Obtener el token de autorización del localStorage
-
-            if (!token) {
-                setError({ activate: true, message: "Error: Usuario no autenticado" });
-                return;
-            }
-
-            const response = await axios.post('http://localhost:5000/expenses', {
-                date: expenseDate,
-                description: description,
-                amount: parseFloat(amount)
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}` // Incluir el token en el encabezado de autorización
-                }
-            });
-
-            console.log("Gasto creado:", response.data);
-            toggleScreen('viewExpenses'); // Navegar a ver gastos después de agregar un nuevo gasto
+            createAExpensePersonal(expenseDate, description, amount, setError, toggleScreen);
         } catch (error) {
             console.error("Error durante la creación del gasto:", error);
             setError({ activate: true, message: "Error: No se pudo crear el gasto. Por favor, inténtelo de nuevo." });

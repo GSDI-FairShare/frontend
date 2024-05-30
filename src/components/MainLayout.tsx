@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Drawer, List, ListItem, ListItemText, AppBar, Toolbar, Typography, CssBaseline } from '@mui/material';
+import { Drawer, AppBar, Toolbar, Typography, CssBaseline } from '@mui/material';
 import { CreateExpense } from './CreateExpense';
 import { ViewExpenses } from './ViewExpenses';
 import { CreateGroup } from './CreateGroup';
@@ -7,57 +6,17 @@ import { ViewGroups } from './ViewGroups';
 import { CreateDebt } from './CreateDebt';
 import { ViewDebts } from './ViewDebts';
 import { PayDebt } from './PayDebt';
+import { UseGroups } from '../hooks/useGroups';
+import { UseDebts } from '../hooks/useDebts';
+import { CustomDrawer } from './CustomDrawer';
+import { UseSelectDet } from '../hooks/useSelectDebt';
 
 const drawerWidth = 240;
 
 export const MainLayout = ({ screen, toggleScreen, addExpense, expenses }) => {
-  const [groups, setGroups] = useState([]);
-  const [debts, setDebts] = useState([]);
-  const [selectedDebt, setSelectedDebt] = useState(null);
-
-  const addGroup = (group) => {
-    setGroups([...groups, group]);
-  };
-
-  const addDebt = (debt) => {
-    setDebts([...debts, debt]);
-  };
-
-  const drawer = (
-    <div>
-      <Toolbar />
-      <List>
-        <ListItem>
-          <ListItemText primary="Gastos Personales" />
-        </ListItem>
-        <List component="div" disablePadding style={{ display: 'block' }}>
-          <ListItem button onClick={() => toggleScreen('createExpense')} style={{ paddingLeft: '32px' }}>
-            <ListItemText primary="Crear un gasto" />
-          </ListItem>
-          <ListItem button onClick={() => toggleScreen('viewExpenses')} style={{ paddingLeft: '32px' }}>
-            <ListItemText primary="Visualizar gastos existentes" />
-          </ListItem>
-        </List>
-        <ListItem>
-          <ListItemText primary="Deudas grupales" />
-        </ListItem>
-        <List component="div" disablePadding style={{ display: 'block' }}>
-          <ListItem button onClick={() => toggleScreen('createGroup')} style={{ paddingLeft: '32px' }}>
-            <ListItemText primary="Crear un grupo" />
-          </ListItem>
-          <ListItem button onClick={() => toggleScreen('createDebt')} style={{ paddingLeft: '32px' }}>
-            <ListItemText primary="Crear una deuda" />
-          </ListItem>
-          <ListItem button onClick={() => toggleScreen('viewDebts')} style={{ paddingLeft: '32px' }}>
-            <ListItemText primary="Visualizar las deudas" />
-          </ListItem>
-          <ListItem button onClick={() => toggleScreen('viewGroups')} style={{ paddingLeft: '32px' }}>
-            <ListItemText primary="Ver Grupos" />
-          </ListItem>
-        </List>
-      </List>
-    </div>
-  );
+  const {groups, addGroup} = UseGroups();
+  const {debts, addDebt} = UseDebts() 
+  const {selectedDebt, setSelectedDebt} = UseSelectDet();
 
   return (
     <div style={{ display: 'flex' }}>
@@ -70,7 +29,7 @@ export const MainLayout = ({ screen, toggleScreen, addExpense, expenses }) => {
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" style={{ width: drawerWidth, flexShrink: 0 }}>
-        {drawer}
+        {CustomDrawer(toggleScreen)}
       </Drawer>
       <main style={{ flexGrow: 1, padding: '3rem', marginLeft: `${drawerWidth}px`, marginTop: '3rem' }}>
         <div style={{ maxWidth: '400px', width: '100%' }}>

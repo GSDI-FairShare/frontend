@@ -6,15 +6,15 @@ import { loginAUser } from "../services/user";
 
 export const Login = ({ toggleScreen }) => {
   const [error, setError] = useState({ activate: false, message: "" });
-  const {inputEmail, inputPassword, handlerEmail, handlerPassword, isValidBasicEmailPassword } = UseEmailAndPassword(setError);
-
+  const {inputEmail, inputPassword, handlerEmail,
+      handlerPassword, isValidBasicEmailPassword } = UseEmailAndPassword(setError);
+  
   const handlerSubmit = async (event) => {
     event.preventDefault();
     if (!isValidBasicEmailPassword()){
       return;
     }
     setError({ activate: false, message: "" });
-    
     try {
       loginAUser(inputEmail, inputPassword, toggleScreen);
     } catch (error) {
