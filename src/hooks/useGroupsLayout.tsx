@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const UseGroups = () => {
+export const UseGroupsLayout = () => {
     const [groups, setGroups] = useState([]);
     const addGroup = (group) => {
         setGroups([...groups, group]);

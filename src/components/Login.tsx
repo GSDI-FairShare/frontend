@@ -2,7 +2,7 @@ import { Stack, TextField, Button } from "@mui/material";
 import { useState } from "react";
 import "../login.css";
 import { UseEmailAndPassword } from "../hooks/useEmailPassword";
-import { loginAUser } from "../services/user";
+import { loginAUser } from "../services/userAccount";
 
 export const Login = ({ toggleScreen }) => {
   const [error, setError] = useState({ activate: false, message: "" });
@@ -14,12 +14,7 @@ export const Login = ({ toggleScreen }) => {
     if (!isValidBasicEmailPassword()){
       return;
     }
-    setError({ activate: false, message: "" });
-    try {
-      loginAUser(inputEmail, inputPassword, toggleScreen);
-    } catch (error) {
-      setError({ activate: true, message: "Error: Email o password incorrectas " });
-    }
+    loginAUser(inputEmail, inputPassword, toggleScreen, setError);
   };
 
   return (

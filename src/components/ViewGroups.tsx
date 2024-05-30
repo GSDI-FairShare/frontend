@@ -1,39 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Typography, Card, CardContent, Box, Divider } from '@mui/material';
-import axios from 'axios';
+import { getGroups } from '../services/groups';
 
+// TODO quizas se quite en un futuro el params toggle aca
 export const ViewGroups = ({ toggleScreen }) => {
   const [groups, setGroups] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchGroups = async () => {
-      try {
-        const token = localStorage.getItem('token'); // Get the auth token from localStorage
-
-        if (!token) {
-          setError("Error: Usuario no autenticado");
-          return;
-        }
-
-        const response = await axios.get('http://localhost:5000/groups', {
-          headers: {
-            'Authorization': `Bearer ${token}` // Include the token in the Authorization header
-          }
-        });
-
-        setGroups(response.data);
-      } catch (error) {
-        console.error("Error al obtener los grupos:", error);
-        if (error.response && error.response.data) {
-          setError(error.response.data.detail);
-        } else {
-          setError("Error: No se pudieron obtener los grupos. Por favor, inténtelo de nuevo.");
-        }
-      }
-    };
-
-    fetchGroups();
+    getGroups(setGroups, setError);
   }, []);
 
   return (

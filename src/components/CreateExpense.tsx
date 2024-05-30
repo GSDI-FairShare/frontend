@@ -7,18 +7,13 @@ export const CreateExpense = ({ toggleScreen }) => {
     const [error, setError] = useState({ activate: false, message: "" });
     const {expenseDate, description, amount, handleDateChange, 
             handleDescriptionChange, handleAmountChange, isValidExpense } = UseExpense(setError);
-
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (!isValidExpense()) {
             return;
         }
-        try {
-            createAExpensePersonal(expenseDate, description, amount, setError, toggleScreen);
-        } catch (error) {
-            console.error("Error durante la creación del gasto:", error);
-            setError({ activate: true, message: "Error: No se pudo crear el gasto. Por favor, inténtelo de nuevo." });
-        }
+        createAExpensePersonal(expenseDate, description, amount, setError, toggleScreen);
     };
 
     return (

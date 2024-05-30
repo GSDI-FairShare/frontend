@@ -2,7 +2,7 @@ import { Button, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import "../login.css";
 import { UseEmailAndPassword } from "../hooks/useEmailPassword";
-import { registerAUser } from "../services/user";
+import { registerAUser } from "../services/userAccount";
 import { UseUserName } from "../hooks/useUserName";
 
 export const Register = ({ toggleScreen }) => {
@@ -15,12 +15,7 @@ export const Register = ({ toggleScreen }) => {
     if (! isValidBasicEmailPassword() || !isValidUserName()){
       return;
     }
-    setError({ activate: false, message: "" });
-    try {
-      registerAUser(userName, inputEmail, inputPassword, toggleScreen);
-    } catch (error) {
-      setError({ activate: true, message: "Error: Ya se encuentra un usuario con el email registrado, Por favor, inténtelo de nuevo." });
-    }
+    registerAUser(userName, inputEmail, inputPassword, toggleScreen, setError);
   };
 
   return (

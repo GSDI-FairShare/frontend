@@ -1,35 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Button, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
+import { UseManyExpenses } from "../hooks/useManyExpenses";
 
 export const ViewExpenses = ({ toggleScreen }) => {
-    const [expenses, setExpenses] = useState([]);
     const [error, setError] = useState({ activate: false, message: "" });
-
+    const {expenses, getExpenses} = UseManyExpenses(setError);
     useEffect(() => {
-        const fetchExpenses = async () => {
-            try {
-                const token = localStorage.getItem('token'); // Obtener el token de autorización del localStorage
-
-                if (!token) {
-                    setError({ activate: true, message: "Error: Usuario no autenticado" });
-                    return;
-                }
-
-                const response = await axios.get('http://localhost:5000/expenses', {
-                    headers: {
-                        'Authorization': `Bearer ${token}` // Incluir el token en el encabezado de autorización
-                    }
-                });
-
-                setExpenses(response.data);
-            } catch (error) {
-                console.error("Error al obtener los gastos:", error);
-                setError({ activate: true, message: "Error: No se pudieron obtener los gastos. Por favor, inténtelo de nuevo." });
-            }
-        };
-
-        fetchExpenses();
+        getExpenses();
+        console.log("loop infinite.");
     }, []);
 
     // Ordenar los gastos por fecha
@@ -66,7 +44,7 @@ export const ViewExpenses = ({ toggleScreen }) => {
                         </Table>
                     </TableContainer>
                 ) : (
-                    <center><p>No hay gastos para visualizar</p></center>
+                    <center><p>No hay gastos para visualizar 🚶💰</p></center>
                 )
             )}
         </div>

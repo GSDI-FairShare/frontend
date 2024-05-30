@@ -6,7 +6,7 @@ import { ViewGroups } from './ViewGroups';
 import { CreateDebt } from './CreateDebt';
 import { ViewDebts } from './ViewDebts';
 import { PayDebt } from './PayDebt';
-import { UseGroups } from '../hooks/useGroups';
+import { UseGroupsLayout } from '../hooks/useGroupsLayout';
 import { UseDebts } from '../hooks/useDebts';
 import { CustomDrawer } from './CustomDrawer';
 import { UseSelectDet } from '../hooks/useSelectDebt';
@@ -14,7 +14,7 @@ import { UseSelectDet } from '../hooks/useSelectDebt';
 const drawerWidth = 240;
 
 export const MainLayout = ({ screen, toggleScreen, addExpense, expenses }) => {
-  const {groups, addGroup} = UseGroups();
+  const {groups, addGroup} = UseGroupsLayout();
   const {debts, addDebt} = UseDebts() 
   const {selectedDebt, setSelectedDebt} = UseSelectDet();
 

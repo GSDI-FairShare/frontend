@@ -1,87 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { TextField, Button, IconButton, Grid, Typography } from '@mui/material';
 import { Add, Remove } from '@mui/icons-material';
-import axios from 'axios';
+import { UseGroup } from '../hooks/useGroup';
+import { createGroup } from '../services/groups';
 
 export const CreateGroup = ({ addGroup, toggleScreen }) => {
-  const [groupName, setGroupName] = useState('');
-  const [emails, setEmails] = useState(['']);
   const [error, setError] = useState(null);
-
-  const handleEmailChange = (index, event) => {
-    const newEmails = [...emails];
-    newEmails[index] = event.target.value;
-    setEmails(newEmails);
-  };
-
-  const handleAddEmailField = () => {
-    setEmails([...emails, '']);
-  };
-
-  const handleRemoveEmailField = (index) => {
-    const newEmails = [...emails];
-    newEmails.splice(index, 1);
-    setEmails(newEmails);
-  };
+  const {groupName, emails, setGroupName,  handleAddEmailField,
+         handleEmailChange, handleRemoveEmailField, resetFields } = UseGroup();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token'); // Get the auth token from localStorage
-  
-    if (!token) {
-      setError("Error: Usuario no autenticado");
-      return;
-    }
-  
-    try {
-      // Create the group
-      const groupResponse = await axios.post('http://localhost:5000/groups', {
-        name: groupName,
-        members: emails.filter(email => email)  // Filter out empty emails
-      }, {
-        headers: {
-          'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
-        }
-      });
-
-      const groupId = groupResponse.data.id;
-
-      // Add members to the group
-      const memberPromises = emails.filter(email => email).map(async email => {
-        const userResponse = await axios.get(`http://localhost:5000/users/email/${email}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        const userId = userResponse.data.id;
-        return axios.post('http://localhost:5000/group_members', {
-          user_id: userId,
-          group_id: groupId
-        }, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-      });
-
-      await Promise.all(memberPromises);
-
-      // Call addGroup to update the parent component or state
-      addGroup(groupResponse.data);
-      setGroupName('');
-      setEmails(['']);
-      setError(null); // Clear previous error messages
-    } catch (error) {
-      console.error("Error al crear el grupo:", error);
-      if (error.response && error.response.data) {
-        setError(error.response.data.detail);
-      } else {
-        setError("Error: No se pudo crear el grupo. Por favor, inténtelo de nuevo.");
-      }
-    }
+    const groupResponse = createGroup(groupName, emails, setError);
+    addGroup(groupResponse.data);
+    resetFields();
   };
-
+  
   return (
     <div>
       <div>

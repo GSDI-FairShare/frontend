@@ -14,12 +14,10 @@ export const CreateDebt = ({ toggleScreen, addDebt }) => {
     const fetchGroups = async () => {
       try {
         const token = localStorage.getItem('token'); // Get the auth token from localStorage
-
         if (!token) {
           setError("Error: Usuario no autenticado");
           return;
         }
-
         const response = await axios.get('http://localhost:5000/groups', {
           headers: {
             'Authorization': `Bearer ${token}` // Include the token in the Authorization header
