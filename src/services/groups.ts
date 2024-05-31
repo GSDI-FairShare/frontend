@@ -73,7 +73,7 @@ export const getGroups = async (setError) => {
 }
 
 
-export const getDataOfMyGroupsAndMembers = async (setError) => {
+export const getDataOfMyGroupsAndHisMembers = async (setError) => {
   // todo falta validaciones del token.   
   const token = localStorage.getItem('token'); // Get the auth token from localStorage
     if (!token) {

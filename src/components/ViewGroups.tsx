@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Typography, Card, CardContent, Box, Divider } from '@mui/material';
-import { getDataOfMyGroupsAndMembers } from '../services/groups';
+import { getDataOfMyGroupsAndHisMembers } from '../services/groups';
 
 // TODO quizas se quite en un futuro el params toggle aca
 export const ViewGroups = ({ toggleScreen }) => {
@@ -8,7 +8,7 @@ export const ViewGroups = ({ toggleScreen }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    getDataOfMyGroupsAndMembers(setError).then( (dataGroups) => { setGroups(dataGroups) } );
+    getDataOfMyGroupsAndHisMembers(setError).then( (dataGroups) => { setGroups(dataGroups) } );
     //getMemberOfGroup(3,setGroupsCreated, groups, setError)
   }, []);
 
@@ -31,7 +31,7 @@ export const ViewGroups = ({ toggleScreen }) => {
                   <>
                     <Divider />
                     {group.members.map( (aMember,index) => {
-                      return (<p key={index}> {aMember.name} <br/> {aMember.email} </p>) 
+                      return (<p key={index}> Integrante {index+1}: <br/> {aMember.name} <br/> {aMember.email} </p>) 
                       })}
                   </>
                 </CardContent>
