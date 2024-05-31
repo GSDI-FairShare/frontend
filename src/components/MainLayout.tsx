@@ -1,4 +1,4 @@
-import { Drawer, AppBar, Toolbar, Typography, CssBaseline } from '@mui/material';
+import { Drawer, AppBar, Toolbar, Typography} from '@mui/material';
 import { CreateExpense } from './CreateExpense';
 import { ViewExpenses } from './ViewExpenses';
 import { CreateGroup } from './CreateGroup';
@@ -19,8 +19,7 @@ export const MainLayout = ({ screen, toggleScreen, addExpense, expenses }) => {
   const {selectedDebt, setSelectedDebt} = UseSelectDet();
 
   return (
-    <div style={{ display: 'flex' }}>
-      <CssBaseline />
+    <div>
       <AppBar position="fixed" style={{ zIndex: 1400 }}>
         <Toolbar>
           <Typography variant="h6" noWrap style={{ margin: 'auto' }}>

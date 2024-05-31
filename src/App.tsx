@@ -4,7 +4,7 @@ import { Login } from "./components/Login";
 import { Register } from "./components/Register";
 import { ForgotPassword } from "./components/ForgotPassword";
 import { MainLayout } from "./components/MainLayout";
-
+import "./styles/app.css"
 const App = () => {
   const [expenses, setExpenses] = useState([]);
   const navigate = useNavigate();
@@ -18,7 +18,8 @@ const App = () => {
   };
 
   return (
-    <Routes>
+    <main className='app'>
+      <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<Login toggleScreen={toggleScreen} />} />
       <Route path="/register" element={<Register toggleScreen={toggleScreen} />} />
@@ -32,6 +33,7 @@ const App = () => {
       <Route path="/createDebt" element={<MainLayout toggleScreen={toggleScreen} addExpense={addExpense} expenses={expenses} screen="createDebt" />} />
       <Route path="/payDebt" element={<MainLayout toggleScreen={toggleScreen} addExpense={addExpense} expenses={expenses} screen="payDebt" />} />
     </Routes>
+    </main>
   );
 };
 

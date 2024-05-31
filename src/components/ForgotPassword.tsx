@@ -1,27 +1,18 @@
 import { useState } from "react";
 import { Stack, TextField, Button } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
-import "../login.css";
+import "../styles/login.css";
+import { UseAccountRecovery } from "../hooks/useAccountRecovery";
 
 export const ForgotPassword = ({ toggleScreen }) => {
-  const [inputEmail, setInputEmail] = useState("");
-  const [message, setMessage] = useState("");
   const [error, setError] = useState({ activate: false, message: "" });
-  const navigate = useNavigate();
-
-  const handlerEmail = (event) => {
-    const newInput = event.target.value;
-    setInputEmail(newInput);
-  };
-
+  const {sendMessage, handlerEmail, isValidInput, message} = UseAccountRecovery(setError);
+  
   const handlerSubmit = (event) => {
     event.preventDefault();
-    if (inputEmail.includes('@') === false) {
-      setError({ activate: true, message: "Error: El email deberia incluir un @" });
+    if (!isValidInput()) {
       return;
     }
-    setError({ activate: false, message: "" });
-    setMessage("Un enlace para recuperar su contraseña ha sido enviado a su correo electrónico.");
+    sendMessage()
   };
 
   return (
