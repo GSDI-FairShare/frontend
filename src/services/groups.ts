@@ -60,7 +60,7 @@ export const getGroups = async (setGroups, setError) => {
         'Authorization': `Bearer ${token}` // Include the token in the Authorization header
       }
     });
-
+    console.log("response.data: ", response.data);
     setGroups(response.data);
   } catch (error) {
     console.error("Error al obtener los grupos:", error);

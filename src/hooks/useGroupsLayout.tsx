@@ -6,5 +6,5 @@ export const UseGroupsLayout = () => {
         setGroups([...groups, group]);
       };
     
-    return {groups, addGroup}
+    return {groups, addGroup, setGroups}
 }

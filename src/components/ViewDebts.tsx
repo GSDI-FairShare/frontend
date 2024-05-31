@@ -1,5 +1,5 @@
-import React from 'react';
 import { Typography, Card, CardContent, List, ListItem, ListItemText, Box, Divider, Button } from '@mui/material';
+
 
 export const ViewDebts = ({ debts, toggleScreen, setSelectedDebt }) => {
   const handlePayDebt = (debt) => {

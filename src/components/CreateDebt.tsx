@@ -1,81 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { TextField, Button, MenuItem } from '@mui/material';
-import axios from 'axios';
+import { getGroups } from '../services/groups';
+import { createDebt } from '../services/debts';
+import { UseCreateDebt } from '../hooks/useCreateDebt';
+import { UseGroupsLayout } from '../hooks/useGroupsLayout';
 
 export const CreateDebt = ({ toggleScreen, addDebt }) => {
-  const [debtName, setDebtName] = useState('');
-  const [selectedGroup, setSelectedGroup] = useState('');
-  const [amount, setAmount] = useState('');
-  const [date, setDate] = useState('');
-  const [groups, setGroups] = useState([]);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
+  const {debtName, setDebtName, selectedGroup, setSelectedGroup,
+        amount, setAmount, date, setDate, resetFields, isValidInput} = UseCreateDebt(setError);
+  const {groups, setGroups} = UseGroupsLayout();
 
   useEffect(() => {
-    const fetchGroups = async () => {
-      try {
-        const token = localStorage.getItem('token'); // Get the auth token from localStorage
-        if (!token) {
-          setError("Error: Usuario no autenticado");
-          return;
-        }
-        const response = await axios.get('http://localhost:5000/groups', {
-          headers: {
-            'Authorization': `Bearer ${token}` // Include the token in the Authorization header
-          }
-        });
-
-        setGroups(response.data);
-      } catch (error) {
-        console.error("Error al obtener los grupos:", error);
-        if (error.response && error.response.data) {
-          setError(error.response.data.detail);
-        } else {
-          setError("Error: No se pudieron obtener los grupos. Por favor, inténtelo de nuevo.");
-        }
-      }
-    };
-
-    fetchGroups();
+    getGroups(setGroups, setError)
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token'); // Get the auth token from localStorage
-
-    if (!token) {
-      setError("Error: Usuario no autenticado");
+    if( !isValidInput()){
       return;
     }
-
-    if (selectedGroup && debtName && amount && date) {
-      try {
-        const response = await axios.post(`http://localhost:5000/groups/${selectedGroup}/expenses`, {
-          amount: parseFloat(amount),
-          description: debtName,
-          date: date
-        }, {
-          headers: {
-            'Authorization': `Bearer ${token}` // Include the token in the Authorization header
-          }
-        });
-
-        addDebt(response.data);
-        setDebtName('');
-        setSelectedGroup('');
-        setAmount('');
-        setDate('');
-        toggleScreen('viewDebts');
-      } catch (error) {
-        console.error("Error al crear la deuda:", error);
-        if (error.response && error.response.data) {
-          setError(error.response.data.detail);
-        } else {
-          setError("Error: No se pudo crear la deuda. Por favor, inténtelo de nuevo.");
-        }
-      }
-    } else {
-      alert('Todos los campos son obligatorios.');
-    }
+    const response = await createDebt(selectedGroup, debtName, amount, date,  setError)
+    addDebt(response.data);
+    resetFields();
+    toggleScreen('viewDebts');
   };
 
   return (
