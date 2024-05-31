@@ -2,7 +2,7 @@ import { Stack, TextField, Button } from "@mui/material";
 import { useState } from "react";
 import "../styles/login.css";
 import { UseEmailAndPassword } from "../hooks/useEmailPassword";
-import { loginAUser } from "../services/userAccount";
+import { loginAUser } from "../services/auth";
 
 export const Login = ({ toggleScreen }) => {
   const [error, setError] = useState({ activate: false, message: "" });

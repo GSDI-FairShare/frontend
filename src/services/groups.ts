@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { getUserData } from "./users";
 
 export const createGroup = async (groupName, emails, setError) => {
     const token = localStorage.getItem('token'); // Get the auth token from localStorage
@@ -45,10 +45,10 @@ export const createGroup = async (groupName, emails, setError) => {
         setError("Error: No se pudo crear el grupo. Por favor, inténtelo de nuevo.");
       }
     }
-
 }
 
-export const getGroups = async (setGroups, setError) => {
+
+export const getGroups = async (setError) => {
   try {
     const token = localStorage.getItem('token'); // Get the auth token from localStorage
     if (!token) {
@@ -61,7 +61,7 @@ export const getGroups = async (setGroups, setError) => {
       }
     });
     console.log("response.data: ", response.data);
-    setGroups(response.data);
+    return response.data;
   } catch (error) {
     console.error("Error al obtener los grupos:", error);
     if (error.response && error.response.data) {
@@ -71,4 +71,27 @@ export const getGroups = async (setGroups, setError) => {
     }
   }
 }
+
+
+export const getDataOfMyGroupsAndMembers = async (setError) => {
+  // todo falta validaciones del token.   
+  const token = localStorage.getItem('token'); // Get the auth token from localStorage
+    if (!token) {
+      setError("Error: Usuario no autenticado");
+      return;
+    }
+    const allMyGroups = await getGroups(setError);
+    console.log("allMyGroups--  🎲 : ", allMyGroups);
+    const dataTeams = await Promise.all(allMyGroups.map( async (aGroup) => {
+        const members = await Promise.all(aGroup.members.map( async (aMember) => {
+          const userData = await getUserData(aMember.user_id, setError);
+          return {name: userData.username, email: userData.email};
+        }));
+        return {id: aGroup.id, name: aGroup.name, members};
+      }
+     ))
+     
+     return dataTeams;
+}
+
 

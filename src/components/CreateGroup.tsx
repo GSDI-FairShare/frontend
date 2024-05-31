@@ -11,7 +11,7 @@ export const CreateGroup = ({ addGroup, toggleScreen }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const groupResponse = createGroup(groupName, emails, setError);
+    const groupResponse = await createGroup(groupName, emails, setError);
     addGroup(groupResponse.data);
     resetFields();
   };

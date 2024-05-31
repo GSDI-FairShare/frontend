@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Typography, Card, CardContent, Box, Divider } from '@mui/material';
-import { getGroups } from '../services/groups';
+import { getDataOfMyGroupsAndMembers } from '../services/groups';
 
 // TODO quizas se quite en un futuro el params toggle aca
 export const ViewGroups = ({ toggleScreen }) => {
@@ -8,7 +8,8 @@ export const ViewGroups = ({ toggleScreen }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    getGroups(setGroups, setError);
+    getDataOfMyGroupsAndMembers(setError).then( (dataGroups) => { setGroups(dataGroups) } );
+    //getMemberOfGroup(3,setGroupsCreated, groups, setError)
   }, []);
 
   return (
@@ -23,16 +24,16 @@ export const ViewGroups = ({ toggleScreen }) => {
       ) : (
         <Box>
           {groups.map((group, index) => (
-            <Box key={index} mb={2}>
+            <Box key={group.id} mb={2}>
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>{group.name}</Typography>
-                  {group.description && (
-                    <>
-                      <Divider />
-                      <Typography variant="body2" color="textSecondary">{group.description}</Typography>
-                    </>
-                  )}
+                  <>
+                    <Divider />
+                    {group.members.map( (aMember,index) => {
+                      return (<p key={index}> {aMember.name} <br/> {aMember.email} </p>) 
+                      })}
+                  </>
                 </CardContent>
               </Card>
             </Box>

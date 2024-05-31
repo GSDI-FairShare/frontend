@@ -2,7 +2,7 @@ import { Button, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import "../styles/login.css";
 import { UseEmailAndPassword } from "../hooks/useEmailPassword";
-import { registerAUser } from "../services/userAccount";
+import { registerAUser } from "../services/auth";
 import { UseUserName } from "../hooks/useUserName";
 
 export const Register = ({ toggleScreen }) => {

@@ -10,9 +10,9 @@ export const CreateDebt = ({ toggleScreen, addDebt }) => {
   const {debtName, setDebtName, selectedGroup, setSelectedGroup,
         amount, setAmount, date, setDate, resetFields, isValidInput} = UseCreateDebt(setError);
   const {groups, setGroups} = UseGroupsLayout();
-
+    
   useEffect(() => {
-    getGroups(setGroups, setError)
+    getGroups(setError).then( (groupsResult) =>{ setGroups(groupsResult) } );
   }, []);
 
   const handleSubmit = async (e) => {
