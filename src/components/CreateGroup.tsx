@@ -5,17 +5,22 @@ import { UseGroup } from '../hooks/useGroup';
 import { createGroup } from '../services/groups';
 
 export const CreateGroup = ({ addGroup, toggleScreen }) => {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const {groupName, emails, setGroupName,  handleAddEmailField,
-         handleEmailChange, handleRemoveEmailField, resetFields } = UseGroup();
-
+         handleEmailChange, handleRemoveEmailField, resetFields,
+         isValidInput, groupDescription, setGroupDescription } = UseGroup();
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const groupResponse = await createGroup(groupName, emails, setError);
+    if(!isValidInput(setError)){
+      return;
+    }
+    const groupResponse = await createGroup(groupName, groupDescription, emails, setError);
     addGroup(groupResponse.data);
     resetFields();
   };
   
+
   return (
     <div>
       <div>
@@ -27,6 +32,14 @@ export const CreateGroup = ({ addGroup, toggleScreen }) => {
           label="Nombre del Grupo"
           value={groupName}
           onChange={(e) => setGroupName(e.target.value)}
+          fullWidth
+          required
+          margin="normal"
+        />
+        <TextField
+          label="Descripcion del Grupo"
+          value={groupDescription}
+          onChange={(e) => setGroupDescription(e.target.value)}
           fullWidth
           required
           margin="normal"

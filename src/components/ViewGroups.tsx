@@ -29,6 +29,8 @@ export const ViewGroups = ({ toggleScreen }) => {
                 <CardContent>
                   <Typography variant="h6" gutterBottom>{group.name}</Typography>
                   <>
+                  <Divider />
+                  <Typography variant="body2" > Descripcion: {group.description}</Typography>
                     <Divider />
                     {group.members.map( (aMember,index) => {
                       return (<p key={index}> Integrante {index+1}: <br/> {aMember.name} <br/> {aMember.email} </p>) 

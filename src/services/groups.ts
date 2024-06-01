@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getUserData } from "./users";
 
-export const createGroup = async (groupName, emails, setError) => {
+export const createGroup = async (groupName:string, groupDescription:string,  emails, setError) => {
     const token = localStorage.getItem('token'); // Get the auth token from localStorage
     if (!token) {
       setError("Error: Usuario no autenticado");
@@ -11,7 +11,7 @@ export const createGroup = async (groupName, emails, setError) => {
     try{
       const groupResponse = await axios.post('http://localhost:5000/groups', {
       name: groupName,
-      members: emails.filter(email => email)  // Filter out empty emails
+      description: groupDescription
       }, {
       headers: {
       'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
@@ -19,7 +19,7 @@ export const createGroup = async (groupName, emails, setError) => {
       });
       const groupId = groupResponse.data.id;
       // Add members to the group
-      await emails.filter(email => email).map(async email => {
+      await emails.map(async email => {
         const userResponse = await axios.get(`http://localhost:5000/users/email/${email}`, {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -87,7 +87,7 @@ export const getDataOfMyGroupsAndHisMembers = async (setError) => {
           const userData = await getUserData(aMember.user_id, setError);
           return {name: userData.username, email: userData.email};
         }));
-        return {id: aGroup.id, name: aGroup.name, members};
+        return {id: aGroup.id, description: aGroup.description, name: aGroup.name, members};
       }
      ))
      
