@@ -20,7 +20,7 @@ export const CreateExpense = ({ toggleScreen }) => {
         <form  className="form__CreateExpenses"  style={{ marginTop: '0rem' }} onSubmit={handleSubmit}>
             <h1> Crear un Gasto Personal</h1>
             <Stack spacing={3}>
-                <TextField id="expenseDate" label="Fecha del gasto" variant="outlined" type="date" value={expenseDate} onChange={handleDateChange} />
+                <TextField id="expenseDate" label="Fecha del gasto" variant="outlined" type="date" value={expenseDate} InputLabelProps={{ shrink: true }} onChange={handleDateChange} />
                 <TextField id="description" label="Descripción" variant="outlined" value={description} onChange={handleDescriptionChange} />
                 <TextField id="amount" label="Monto" variant="outlined" type="number" value={amount} onChange={handleAmountChange} />
                 {error.activate && <p className='form__error'>{error.message}</p>}

@@ -1,6 +1,22 @@
 import axios from "axios";
 import { getUserData } from "./users";
 
+export const getInfoGroup = async(groupId:number, setError) => {
+    const token = localStorage.getItem('token'); // Get the auth token from localStorage
+    if (!token) {
+      setError("Error: Usuario no autenticado");
+      return;
+    }
+    const response = await axios.get(`http://localhost:5000/groups/${groupId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}` // Include the token in the Authorization header
+      }
+    });
+    console.log("response.data: ", response.data);
+    return response.data
+}
+
+
 export const createGroup = async (groupName:string, groupDescription:string,  emails, setError) => {
     const token = localStorage.getItem('token'); // Get the auth token from localStorage
     if (!token) {

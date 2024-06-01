@@ -31,7 +31,7 @@ export const MainLayout = ({ screen, toggleScreen, addExpense, expenses }) => {
         {CustomDrawer(toggleScreen)}
       </Drawer>
       <main style={{ flexGrow: 1, padding: '3rem', marginLeft: `${drawerWidth}px`, marginTop: '3rem' }}>
-        <div style={{ maxWidth: '400px', width: '100%' }}>
+        <div style={{ width: '100%' }}>
           {screen === 'createExpense' && <CreateExpense addExpense={addExpense} toggleScreen={toggleScreen} />}
           {screen === 'viewExpenses' && <ViewExpenses expenses={expenses} toggleScreen={toggleScreen} />}
           {screen === 'createGroup' && <CreateGroup addGroup={addGroup} toggleScreen={toggleScreen} />}

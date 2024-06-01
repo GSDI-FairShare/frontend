@@ -5,9 +5,9 @@ import { createDebt } from '../services/debts';
 import { UseCreateDebt } from '../hooks/useCreateDebt';
 import { UseGroupsLayout } from '../hooks/useGroupsLayout';
 
-export const CreateDebt = ({ toggleScreen, addDebt }) => {
+export const CreateDebt = ({ toggleScreen }) => {
   const [error, setError] = useState("");
-  const {debtName, setDebtName, selectedGroup, setSelectedGroup,
+  const {debtName, setDebtName, selectedGroupId, setSelectedGroupId,
         amount, setAmount, date, setDate, resetFields, isValidInput} = UseCreateDebt(setError);
   const {groups, setGroups} = UseGroupsLayout();
 
@@ -21,8 +21,7 @@ export const CreateDebt = ({ toggleScreen, addDebt }) => {
     if( !isValidInput()){
       return;
     }
-    const response = await createDebt(selectedGroup, debtName, amount, date,  setError)
-    addDebt(response.data);
+    await createDebt(selectedGroupId, debtName, amount, date,  setError)
     resetFields();
     toggleScreen('viewDebts');
   };
@@ -43,8 +42,9 @@ export const CreateDebt = ({ toggleScreen, addDebt }) => {
         <TextField
           label="Seleccionar Grupo"
           select
-          value={selectedGroup}
-          onChange={(e) => setSelectedGroup(e.target.value)}
+          value={selectedGroupId}
+          onChange={(e) => { 
+           setSelectedGroupId(e.target.value)}}
           fullWidth
           required
           margin="normal"

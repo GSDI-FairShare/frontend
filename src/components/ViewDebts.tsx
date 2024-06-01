@@ -1,45 +1,59 @@
-import { Typography, Card, CardContent, List, ListItem, ListItemText, Box, Divider, Button } from '@mui/material';
+import { Typography, Card, CardContent, Box, Divider, Button } from '@mui/material';
+import { getAllDebtsFromMyGroups } from '../services/debts';
+import { useEffect, useState } from 'react';
 
-export const ViewDebts = ({ debts, toggleScreen, setSelectedDebt }) => {
+export const ViewDebts = ({ toggleScreen, setSelectedDebt }) => {
+  const [error, setError] = useState("");
+  const [debtsFromMyGroups, setDebtsFromMyGroups ] = useState([]);
+  useEffect( () => {
+    getAllDebtsFromMyGroups(setError).then( (debtsResult) =>{ 
+      console.log("getAllDebtsFromMyGroups", debtsResult);
+      setDebtsFromMyGroups(debtsResult) 
+    });
+  }, [])
+  
   const handlePayDebt = (debt) => {
     setSelectedDebt(debt);
     toggleScreen('payDebt');
   };
 
   return (
-    <div>
+    <Box>
       <h1>Deudas Creadas</h1>
-      {debts.length === 0 ? (
-        <center><Typography>No hay deudas creadas.</Typography></center>
-      ) : (
-        <Box>
-          {debts.map((debt, index) => (
-            <Box key={index} mb={2}>
+      {debtsFromMyGroups.length === 0 ? ( <center><Typography>No hay deudas creadas.</Typography></center>) :(
+        <Box display="flex" flexWrap="wrap" gap={2} >
+          {debtsFromMyGroups.map((aGroup, index) => {
+            return <Box key={aGroup.data[0].group_id} mb={2} flex="1 1 300px" maxWidth="calc(100%)">
               <Card>
                 <CardContent>
-                  <Typography variant="h6" gutterBottom>{debt.name}</Typography>
+                  <Typography variant="h4" gutterBottom>Grupo: {aGroup.data[0].name} </Typography>
                   <Divider />
-                  <List>
-                    <ListItem>
-                      <ListItemText primary={`Grupo: ${debt.group}`} />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText primary={`Monto: $${debt.amount}`} />
-                    </ListItem>
-                  </List>
-                  <Button 
-                    variant="contained" 
-                    color="secondary" 
-                    onClick={() => handlePayDebt(debt)}
-                  >
-                    Pagar Deuda
-                  </Button>
+                {aGroup.data.map( (aDebt ,index) => {
+                return <Card key={index} sx={{mt : 3, boxShadow: 5}}  >
+                <CardContent>
+                  <Typography variant="h5" gutterBottom>Deuda: {aDebt.description}</Typography>
+                  <Typography variant='h6' > Monto total del gasto: ${aDebt.amount} </Typography>
+                  <Divider sx={{mb: 1}} />
+                    { aDebt.splits.map( (aUser, index) => {
+                      return <Box key={index} mt={1} mb={3}>
+                              <Typography> Nombre: {aUser.name} </Typography>
+                              <Typography> Mail: {aUser.email} </Typography>
+                              <Typography> Monto: {aUser.amount} </Typography>
+                              <Typography> Ponderacion: {Math.round(aUser.percentage) }% </Typography>  
+                              <Typography mr={5} > Deuda pagada: {aUser.paid ? "Si" : "No"} </Typography>
+                              <Button variant="contained" color="secondary" onClick={() => handlePayDebt(aGroup)}> Pagar Deuda </Button>
+                              <Divider sx={{ mt: 2 }}/>
+                          </Box>
+                    })}
+                </CardContent>
+              </Card> 
+              })}
                 </CardContent>
               </Card>
             </Box>
-          ))}
+          })}
         </Box>
       )}
-    </div>
+    </Box>
   );
 };
