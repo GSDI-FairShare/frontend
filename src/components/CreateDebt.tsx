@@ -8,9 +8,7 @@ import { UseError } from '../hooks/useError';
 import { PERCENTAGES, SPECIFIC_AMOUNTS, typesDebtSplit } from '../constants/constants';
 import { UseMembers } from '../hooks/useMembers';
 import { UseDebtPercentages } from '../hooks/useDebtPercentages';
-import { PercentageDebt } from './PercentageDebt';
 import { UseDebtAmount } from '../hooks/useDebtAmount';
-import { AmountDebt } from './AmountDebt';
 import { DivisionDebt } from './DivisionDebt';
 
 export const CreateDebt = ({ toggleScreen }) => {

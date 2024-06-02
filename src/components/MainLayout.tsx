@@ -22,7 +22,7 @@ export const MainLayout = ({ screen, toggleScreen }) => {
       <Drawer variant="permanent" style={{ width: drawerWidth, flexShrink: 0 }}>
         {CustomDrawer(toggleScreen)}
       </Drawer>
-      <main style={{ flexGrow: 1, padding: '3rem', marginLeft: `${drawerWidth}px`, marginTop: '3rem' }}>
+      <main style={{ flexGrow: 1, padding: '3rem', marginLeft: `${drawerWidth}px`, marginTop: '2rem' }}>
         <div style={{ width: '100%' }}>
           {screen === 'createExpense' && <CreateExpense toggleScreen={toggleScreen} />}
           {screen === 'viewExpenses' && <ViewExpenses toggleScreen={toggleScreen} />}
