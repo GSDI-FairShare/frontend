@@ -21,6 +21,26 @@ export const getInfoGroup = async(groupId:number, setError) => {
     }
 }
 
+export const getInfoAboutAGroupAnHisMembers = async (groupId:number, setError) => {
+    const {isValid} = getToken();
+    if (!isValid){
+        return
+    }
+    try{
+      const resultInfoGroup = await getInfoGroup(Number(groupId), setError);
+      await Promise.all(resultInfoGroup.members.map( async (aMember) => {
+          const dataMember = await getUserData(aMember.user_id, setError);
+          console.log("dataMember", dataMember);
+          aMember.username = dataMember.username;
+          aMember.email = dataMember.email;
+      }))
+      return resultInfoGroup;
+    } catch(error){
+        handleError("Al obtener informacion de un grupo y sus miembros", error, setError)
+    }
+}
+
+
 
 export const createGroup = async (groupName:string, groupDescription:string,  emails, setError) => {
     const {isValid, token} = getToken();

@@ -7,6 +7,7 @@ import { UseDebtsMyGroups } from '../hooks/useDebtsMyGroups';
 export const ViewDebts = ({ toggleScreen }) => {
   const {error, setError} = UseError();
   const {debtsFromMyGroups, setDebtsFromMyGroups} = UseDebtsMyGroups();
+  
   useEffect( () => {
     getAllDebtsFromMyGroups(setError).then( (debtsResult) => { 
       console.log("getAllDebtsFromMyGroups", debtsResult);
@@ -17,6 +18,9 @@ export const ViewDebts = ({ toggleScreen }) => {
   const handlePayDebt = (debt) => {
     toggleScreen('payDebt');
   };
+  const getPonderacion = (aPercentage) => {
+    return Math.round(aPercentage * 100)/100
+  }
 
   return (
     <Box>
@@ -40,8 +44,8 @@ export const ViewDebts = ({ toggleScreen }) => {
                       return <Box key={index} mt={1} mb={3}>
                               <Typography> Nombre: {aUser.name} </Typography>
                               <Typography> Mail: {aUser.email} </Typography>
-                              <Typography> Monto: {Math.ceil(aUser.amount)} </Typography>
-                              <Typography> Ponderacion: {Math.round(aUser.percentage) }% </Typography>  
+                              <Typography> Monto: {getPonderacion(aUser.amount)} </Typography>
+                              <Typography> Ponderacion: {getPonderacion(aUser.percentage)  }% </Typography>  
                               <Typography mr={5} > Deuda pagada: {aUser.paid ? "Si" : "No"} </Typography>
                               <Button variant="contained" color="secondary" onClick={() => handlePayDebt(aGroup)}> Pagar Deuda </Button>
                               <Divider sx={{ mt: 2 }}/>

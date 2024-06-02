@@ -3,23 +3,62 @@ import { getGroups, getInfoGroup } from "./groups";
 import { getUserData } from "./users";
 import { handleError } from "../logic/handleError";
 import { getToken } from "../logic/getToken";
+import { EQUITABLE, PERCENTAGES, SPECIFIC_AMOUNTS } from "../constants/constants";
 
-export const createDebt = async (selectedGroup:string, debtName:string, amount:number, date:string, setError) => {
+export const createEquitableDebt = async (token:string, selectedGroupId:string, amount:number, debtName:string, date:string) => {
+    const response = await axios.post(`http://localhost:5000/groups/${selectedGroupId}/expenses`, {
+      amount: amount,
+      description: debtName,
+      date: date
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}` // Include the token in the Authorization header
+      }
+    });
+    return response;
+}
+
+export const createPercentagesDebt = async (token:string, selectedGroupId:string, amount: number, percentageUsers, debtName:string, date:string) => {
+    const response = await axios.post(`http://localhost:5000/groups/${selectedGroupId}/expenses`, {
+      amount: amount,
+      description: debtName,
+      date: date,
+      splits: percentageUsers,
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}` // Include the token in the Authorization header
+      }
+    });
+    return response;
+}
+
+export const createAmountDebt = async (token:string, selectedGroupId:string, amount: number, amountsToSend, debtName:string, date:string) => {
+  const response = await axios.post(`http://localhost:5000/groups/${selectedGroupId}/expenses`, {
+    amount: amount,
+    description: debtName,
+    date: date,
+    splits: amountsToSend,
+  }, {
+    headers: {
+      'Authorization': `Bearer ${token}` // Include the token in the Authorization header
+    }
+  });
+  return response;
+}
+
+export const createDebt = async (selectTypeSplit:string, percentageUsers, amountsToSend,  selectedGroupId:string, debtName:string, amount:number, date:string, setError) => {
     const {isValid, token} = getToken();
     if (!isValid){
         return
     }
     try{
-        const response = await axios.post(`http://localhost:5000/groups/${selectedGroup}/expenses`, {
-            amount: amount,
-            description: debtName,
-            date: date
-          }, {
-            headers: {
-              'Authorization': `Bearer ${token}` // Include the token in the Authorization header
-            }
-          });
-        return response;
+      if(selectTypeSplit == EQUITABLE ){
+        await createEquitableDebt(token, selectedGroupId, amount, debtName, date);
+      } else if (selectTypeSplit == PERCENTAGES ){
+        await createPercentagesDebt(token, selectedGroupId, amount, percentageUsers, debtName, date)
+      } else if (selectTypeSplit == SPECIFIC_AMOUNTS ){
+        await createAmountDebt(token, selectedGroupId, amount, amountsToSend, debtName, date)
+      }
     } catch(error){
         handleError("Al crear una deuda ", error, setError);
     }

@@ -5,16 +5,18 @@ export const UseCreateDebt = (setError) => {
     const [selectedGroupId, setSelectedGroupId] = useState('');
     const [amount, setAmount] = useState(0);
     const [date, setDate] = useState('');
+    const [selectTypeSplit, setSelectTypeSplit] = useState('');
 
     const resetFields = () => {
         setDebtName('');
         setSelectedGroupId('');
         setAmount(0);
         setDate('');
+        setSelectTypeSplit('')
     }
 
     const isValidInput = () => {
-        if( selectedGroupId === "" || debtName === "" || amount <= 0 || date === ""){
+        if( selectedGroupId === '' || debtName === "" || amount <= 0 || date === "" || selectTypeSplit === "" ){
             setError("Error: Por favor complete todos los campos, ademas el monto debe ser mayor a cero");
             return false;
           }
@@ -22,5 +24,6 @@ export const UseCreateDebt = (setError) => {
     }
     
     
-    return {debtName, setDebtName, selectedGroupId, setSelectedGroupId, amount, setAmount, date, setDate, resetFields, isValidInput}
+    return {debtName, setDebtName, selectedGroupId, setSelectedGroupId, amount, setAmount,
+            date, setDate, resetFields, isValidInput, selectTypeSplit, setSelectTypeSplit}
 }

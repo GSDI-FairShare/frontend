@@ -1,47 +1,46 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Typography, Card, CardContent, Box, Divider } from '@mui/material';
 import { getDataOfMyGroupsAndHisMembers } from '../services/groups';
+import { UseError } from '../hooks/useError';
+import { UseGroupsBasic } from '../hooks/useGroupsBasic';
 
 // TODO quizas se quite en un futuro el params toggle aca
 export const ViewGroups = ({ toggleScreen }) => {
-  const [groups, setGroups] = useState([]);
-  const [error, setError] = useState(null);
+  const {groups, setGroups} = UseGroupsBasic();
+  const {error, setError} = UseError();
 
   useEffect(() => {
     getDataOfMyGroupsAndHisMembers(setError).then( (dataGroups) => { setGroups(dataGroups) } );
-    //getMemberOfGroup(3,setGroupsCreated, groups, setError)
   }, []);
 
   return (
-    <div>
-      <div>
+    <Box>
         <h1>Grupos creados</h1>
-      </div>
       {error ? (
-        <center><Typography>{error}</Typography></center>
-      ) : groups.length === 0 ? (
-        <center><Typography>No hay grupos creados.</Typography></center>
-      ) : (
-        <Box>
-          {groups.map((group, index) => (
-            <Box key={group.id} mb={2}>
-              <Card>
+        <center><Typography>{error}</Typography></center>) : groups.length === 0 ?
+        ( <center><Typography>No hay grupos creados.</Typography></center>) : (
+        <Box display="flex" flexWrap="wrap" gap={2} >
+          {groups.map((group) => (
+            <Box key={group.id} mb={2} flex="1 1 300px" maxWidth="calc(100%)"  >
+              <Card sx={{mt : 3, boxShadow: 5}} >
                 <CardContent>
-                  <Typography variant="h6" gutterBottom>{group.name}</Typography>
-                  <>
+                  <Typography variant="h4" gutterBottom>{group.name}</Typography>
                   <Divider />
-                  <Typography variant="body2" > Descripcion: {group.description}</Typography>
-                    <Divider />
+                  <Typography variant="h5" > Descripcion: {group.description}</Typography>
+                    <Divider sx={{mb: 1}} />
                     {group.members.map( (aMember,index) => {
-                      return (<p key={index}> Integrante {index+1}: <br/> {aMember.name} <br/> {aMember.email} </p>) 
-                      })}
-                  </>
+                      return (<Box key={index} mt={1} mb={3}  >
+                        <Typography> Integrante {index+1}: </Typography>
+                        <Typography> nombre: {aMember.name} </Typography>
+                        <Typography> email: {aMember.email} </Typography>
+                        </Box>
+                      )}) }
                 </CardContent>
               </Card>
             </Box>
           ))}
         </Box>
       )}
-    </div>
+    </Box>
   );
 };

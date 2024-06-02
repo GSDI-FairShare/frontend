@@ -1,10 +1,11 @@
 import axios from "axios";
+import { handleError } from "../logic/handleError";
+import { getToken } from "../logic/getToken";
 
 export const getUserData = async ( user_id:number ,setError) => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      console.log("Ups estas sin token ❌ 🧑‍🎄 ");
-      return null;
+    const {isValid, token} = getToken();
+    if (!isValid){
+        return
     }
     try{
       const response = await axios.get(`http://0.0.0.0:5000/users/${user_id}`,{
@@ -14,8 +15,7 @@ export const getUserData = async ( user_id:number ,setError) => {
       });
       return response.data;
     } catch(error){
-      console.log("Error: Id del usuario no existe ❌ ❌");
-      setError("Error: Id del usuario no existe ❌");
+      handleError("Al Obtener la Informacion del grupo ", error, setError)
     }
 }
 
