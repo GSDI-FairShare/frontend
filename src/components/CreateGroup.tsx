@@ -1,11 +1,11 @@
-import { useState } from 'react';
 import { TextField, Button, IconButton, Grid, Typography } from '@mui/material';
 import { Add, Remove } from '@mui/icons-material';
 import { UseGroup } from '../hooks/useGroup';
 import { createGroup } from '../services/groups';
+import { UseError } from '../hooks/useError';
 
-export const CreateGroup = ({ addGroup, toggleScreen }) => {
-  const [error, setError] = useState("");
+export const CreateGroup = ({ toggleScreen }) => {
+  const {error, setError} = UseError();
   const {groupName, emails, setGroupName,  handleAddEmailField,
          handleEmailChange, handleRemoveEmailField, resetFields,
          isValidInput, groupDescription, setGroupDescription } = UseGroup();
@@ -15,8 +15,7 @@ export const CreateGroup = ({ addGroup, toggleScreen }) => {
     if(!isValidInput(setError)){
       return;
     }
-    const groupResponse = await createGroup(groupName, groupDescription, emails, setError);
-    addGroup(groupResponse.data);
+    await createGroup(groupName, groupDescription, emails, setError);
     resetFields();
   };
   

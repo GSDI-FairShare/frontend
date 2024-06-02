@@ -3,7 +3,6 @@ import { useState } from "react";
 export const UseGroup = () => {
     const [groupName, setGroupName] = useState('');
     const [groupDescription, setGroupDescription] = useState('');
-
     const [emails, setEmails] = useState(['']);
 
     const handleEmailChange = (index, event) => {

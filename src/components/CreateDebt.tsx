@@ -1,15 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { TextField, Button, MenuItem } from '@mui/material';
 import { getGroups } from '../services/groups';
 import { createDebt } from '../services/debts';
 import { UseCreateDebt } from '../hooks/useCreateDebt';
-import { UseGroupsLayout } from '../hooks/useGroupsLayout';
+import { UseGroupsBasic } from '../hooks/useGroupsBasic';
+import { UseError } from '../hooks/useError';
 
 export const CreateDebt = ({ toggleScreen }) => {
-  const [error, setError] = useState("");
+  const {error, setError} = UseError();
   const {debtName, setDebtName, selectedGroupId, setSelectedGroupId,
         amount, setAmount, date, setDate, resetFields, isValidInput} = UseCreateDebt(setError);
-  const {groups, setGroups} = UseGroupsLayout();
+  const {groups, setGroups} = UseGroupsBasic();
 
   useEffect(() => {
     getGroups(setError).then( (groupsResult) =>{ console.log("groupsResult", groupsResult);

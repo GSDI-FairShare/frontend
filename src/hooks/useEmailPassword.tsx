@@ -16,11 +16,11 @@ export const UseEmailAndPassword = (setError) => {
     
     const isValidBasicEmailPassword = () :boolean => {
         if (!inputEmail.includes('@')) {
-            setError({ activate: true, message: "Error: El email debería incluir un @" });
+            setError("Error: El email debería incluir un @");
             return false;
           }
           if (inputPassword.length < 6) {
-            setError({ activate: true, message: "Error: La contraseña debe ser mayor a 6 caracteres" });
+            setError("Error: La contraseña debe ser mayor a 6 caracteres");
             return false;
           }
         return true

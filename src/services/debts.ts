@@ -1,12 +1,13 @@
 import axios from "axios";
 import { getGroups, getInfoGroup } from "./groups";
 import { getUserData } from "./users";
+import { handleError } from "../logic/handleError";
+import { getToken } from "../logic/getToken";
 
 export const createDebt = async (selectedGroup:string, debtName:string, amount:number, date:string, setError) => {
-    const token = localStorage.getItem('token'); // Get the auth token from localStorage
-    if (!token) {
-      setError("Error: Usuario no autenticado");
-      return;
+    const {isValid, token} = getToken();
+    if (!isValid){
+        return
     }
     try{
         const response = await axios.post(`http://localhost:5000/groups/${selectedGroup}/expenses`, {
@@ -20,20 +21,14 @@ export const createDebt = async (selectedGroup:string, debtName:string, amount:n
           });
         return response;
     } catch(error){
-        console.error("Error al crear la deuda:", error);
-        if (error.response && error.response.data) {
-          setError(error.response.data.detail);
-        } else {
-          setError("Error: No se pudo crear la deuda. Por favor, inténtelo de nuevo.");
-        }
+        handleError("Al crear una deuda ", error, setError);
     }
 }
 
 export const getAllDebtsFromMyGroups = async (setError) => {
-    const token = localStorage.getItem('token'); // Get the auth token from localStorage
-    if (!token) {
-      setError("Error: Usuario no autenticado");
-      return;
+    const {isValid, token} = getToken();
+    if (!isValid){
+        return
     }
     try{
       const groupIds = (await getGroups(setError)).map( (aGroup) => { return aGroup.id })
@@ -64,12 +59,7 @@ export const getAllDebtsFromMyGroups = async (setError) => {
       
       return filterDataDebts;
     } catch(error){
-        console.error("Error al obtener las deudas:", error);
-        if (error.response && error.response.data) {
-          setError(error.response.data.detail);
-        } else {
-          setError("Error: No se pudieron obtener las deudas. Por favor, inténtelo de nuevo.");
-        }
+        handleError("Al obtener todas las deudas de mis grupos ", error, setError);
     }
 }
 

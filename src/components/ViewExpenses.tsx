@@ -1,19 +1,16 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 import { UseManyExpenses } from "../hooks/useManyExpenses";
+import { UseError } from "../hooks/useError";
 
 export const ViewExpenses = ({ toggleScreen }) => {
-    const [error, setError] = useState({ activate: false, message: "" });
+    const {error, setError} = UseError();
     const {expenses, getExpenses} = UseManyExpenses(setError);
     useEffect(() => {
         getExpenses();
-        console.log("loop infinite.");
     }, []);
-
-    // Ordenar los gastos por fecha
+    // elegir aca el orden si es por fecha por monto o por nombre del gasto. 
     const sortedExpenses = expenses.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-    // Verificar si hay gastos para mostrar
     const hasExpenses = sortedExpenses.length > 0;
 
     return (

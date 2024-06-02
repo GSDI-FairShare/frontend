@@ -1,11 +1,11 @@
 import { Stack, TextField, Button } from "@mui/material";
-import { useState } from "react";
 import "../styles/login.css";
 import { UseEmailAndPassword } from "../hooks/useEmailPassword";
 import { loginAUser } from "../services/auth";
+import { UseError } from "../hooks/useError";
 
 export const Login = ({ toggleScreen }) => {
-  const [error, setError] = useState({ activate: false, message: "" });
+  const {error, setError} = UseError();
   const {inputEmail, inputPassword, handlerEmail,
       handlerPassword, isValidBasicEmailPassword } = UseEmailAndPassword(setError);
   
@@ -21,9 +21,9 @@ export const Login = ({ toggleScreen }) => {
     <form className='form' onSubmit={handlerSubmit}>
       <h1 className="login__title">Fair Share 🤝📖</h1>
       <Stack spacing={3}>
-        <TextField id="inputEmail" onChange={handlerEmail} label="Email" variant="outlined" size='medium' />
-        <TextField id="inputPassword" onChange={handlerPassword} type='password' label="Contraseña" variant="outlined" />
-        {error.activate && <p className='message_error'>{error.message}</p>}
+        <TextField id="inputEmail" onChange={handlerEmail} label="Email" variant="outlined" size='medium' required />
+        <TextField id="inputPassword" onChange={handlerPassword} type='password' label="Contraseña" variant="outlined" required />
+        {error && <p className='message_error'>{error}</p>}
         <Button type="submit" size='large' variant="contained">Iniciar sesión</Button>
         <Button onClick={() => toggleScreen('register')} size='large' variant="contained">No tienes una cuenta? 👉 Regístrate</Button>
         <Button onClick={() => toggleScreen('forgotPassword')} size='large' variant="contained">Recuperar contraseña</Button>

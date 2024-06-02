@@ -1,19 +1,20 @@
 import { Typography, Card, CardContent, Box, Divider, Button } from '@mui/material';
 import { getAllDebtsFromMyGroups } from '../services/debts';
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
+import { UseError } from '../hooks/useError';
+import { UseDebtsMyGroups } from '../hooks/useDebtsMyGroups';
 
-export const ViewDebts = ({ toggleScreen, setSelectedDebt }) => {
-  const [error, setError] = useState("");
-  const [debtsFromMyGroups, setDebtsFromMyGroups ] = useState([]);
+export const ViewDebts = ({ toggleScreen }) => {
+  const {error, setError} = UseError();
+  const {debtsFromMyGroups, setDebtsFromMyGroups} = UseDebtsMyGroups();
   useEffect( () => {
-    getAllDebtsFromMyGroups(setError).then( (debtsResult) =>{ 
+    getAllDebtsFromMyGroups(setError).then( (debtsResult) => { 
       console.log("getAllDebtsFromMyGroups", debtsResult);
       setDebtsFromMyGroups(debtsResult) 
     });
   }, [])
   
   const handlePayDebt = (debt) => {
-    setSelectedDebt(debt);
     toggleScreen('payDebt');
   };
 
@@ -22,6 +23,7 @@ export const ViewDebts = ({ toggleScreen, setSelectedDebt }) => {
       <h1>Deudas Creadas</h1>
       {debtsFromMyGroups.length === 0 ? ( <center><Typography>No hay deudas creadas.</Typography></center>) :(
         <Box display="flex" flexWrap="wrap" gap={2} >
+          {error && <Typography variant="h6" color="error"> Error: {error} </Typography>}
           {debtsFromMyGroups.map((aGroup, index) => {
             return <Box key={aGroup.data[0].group_id} mb={2} flex="1 1 300px" maxWidth="calc(100%)">
               <Card>
@@ -38,7 +40,7 @@ export const ViewDebts = ({ toggleScreen, setSelectedDebt }) => {
                       return <Box key={index} mt={1} mb={3}>
                               <Typography> Nombre: {aUser.name} </Typography>
                               <Typography> Mail: {aUser.email} </Typography>
-                              <Typography> Monto: {aUser.amount} </Typography>
+                              <Typography> Monto: {Math.ceil(aUser.amount)} </Typography>
                               <Typography> Ponderacion: {Math.round(aUser.percentage) }% </Typography>  
                               <Typography mr={5} > Deuda pagada: {aUser.paid ? "Si" : "No"} </Typography>
                               <Button variant="contained" color="secondary" onClick={() => handlePayDebt(aGroup)}> Pagar Deuda </Button>

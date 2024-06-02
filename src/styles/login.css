@@ -4,9 +4,10 @@
     font-size: 70px;
 }
 
-#inputEmail, #inputPassword, #inputNameUser{
+#inputEmail, #inputPassword, #inputNameUser, .login__message{
     font-size: 25px;
 }
+
 
 
 .message_error{
