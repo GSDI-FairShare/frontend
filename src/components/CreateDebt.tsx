@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { TextField, Button, MenuItem } from '@mui/material';
 import { getGroups } from '../services/groups';
 import { createDebt } from '../services/debts';
+import { getCategories } from "../services/expenses";
 import { UseCreateDebt } from '../hooks/useCreateDebt';
 import { UseGroupsBasic } from '../hooks/useGroupsBasic';
 import { UseError } from '../hooks/useError';
@@ -20,40 +21,53 @@ export const CreateDebt = ({ toggleScreen }) => {
   const {groups, setGroups} = UseGroupsBasic();
   const {percentageUsers, handlerPercentages, initializeUserPercentages, areValidPercentages, getPercentagesToSend} = UseDebtPercentages(setError);
   const {debtAmountUsers, initializeUserAmounts, handlerAmounts, areValidAmounts, getAmountToSend } = UseDebtAmount(setError);
-  
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+
   useEffect(() => {
-    getGroups(setError).then( (groupsResult) =>{ console.log("groupsResult", groupsResult);
-     setGroups(groupsResult) } );
+    getGroups(setError).then((groupsResult) => {
+      console.log("groupsResult", groupsResult);
+      setGroups(groupsResult);
+    });
+
+    getCategories(setError).then((categoriesResult) => {
+      console.log("categoriesResult", categoriesResult);
+      setCategories(categoriesResult);
+    });
   }, []);
 
-  useEffect( ()=> {
-    if((selectTypeSplit == PERCENTAGES || selectTypeSplit == SPECIFIC_AMOUNTS) && selectedGroupId !== ''){
-      getInfoAboutAGroup(selectedGroupId).then( (resultInfoGroup) => {
+  useEffect(() => {
+    if ((selectTypeSplit === PERCENTAGES || selectTypeSplit === SPECIFIC_AMOUNTS) && selectedGroupId !== '') {
+      getInfoAboutAGroup(selectedGroupId).then((resultInfoGroup) => {
         setMembers(resultInfoGroup.members);
-        if(selectTypeSplit == PERCENTAGES){
+        if (selectTypeSplit === PERCENTAGES) {
           initializeUserPercentages(resultInfoGroup);
-        } else{ 
+        } else {
           initializeUserAmounts(resultInfoGroup);
         }
-      })
+      });
     }
-  }, [selectTypeSplit, selectedGroupId])
+  }, [selectTypeSplit, selectedGroupId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if( !isValidInput() || ( selectTypeSplit == PERCENTAGES && !areValidPercentages()) || (selectTypeSplit == SPECIFIC_AMOUNTS && !areValidAmounts(amount)) ){
+    if (!isValidInput() || (selectTypeSplit === PERCENTAGES && !areValidPercentages()) || (selectTypeSplit === SPECIFIC_AMOUNTS && !areValidAmounts(amount))) {
       return;
     }
     let percentagesToSend = {};
     let amountsToSend = {};
-    if (selectTypeSplit == PERCENTAGES){
-      percentagesToSend = getPercentagesToSend(); 
-    } else if (selectTypeSplit == SPECIFIC_AMOUNTS){
-      amountsToSend = getAmountToSend(amount); 
+    if (selectTypeSplit === PERCENTAGES) {
+      percentagesToSend = getPercentagesToSend();
+    } else if (selectTypeSplit === SPECIFIC_AMOUNTS) {
+      amountsToSend = getAmountToSend(amount);
     }
-    await createDebt(selectTypeSplit, percentagesToSend, amountsToSend, selectedGroupId, debtName, amount, date, setError)
+    await createDebt(selectTypeSplit, percentagesToSend, amountsToSend, selectedGroupId, debtName, amount, date, selectedCategory, setError);
     resetFields();
     toggleScreen('viewDebts');
+  };
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
   };
 
   return (
@@ -72,8 +86,7 @@ export const CreateDebt = ({ toggleScreen }) => {
           label="Seleccionar Grupo"
           select
           value={selectedGroupId}
-          onChange={(e) => { 
-           setSelectedGroupId(e.target.value)}}
+          onChange={(e) => setSelectedGroupId(e.target.value)}
           fullWidth
           required
           margin="normal"
@@ -105,30 +118,43 @@ export const CreateDebt = ({ toggleScreen }) => {
             shrink: true,
           }}
         />
-         <TextField
+        <TextField
+          label="Seleccionar Categoría"
+          select
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+          fullWidth
+          required
+          margin="normal"
+        >
+          {categories.map((category, index) => (
+            <MenuItem key={index} value={category}>
+              {category}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
           label="Seleccionar Division de deuda"
           select
           value={selectTypeSplit || ""}
-          onChange={(e) => { 
-           setSelectTypeSplit(e.target.value)}}
+          onChange={(e) => setSelectTypeSplit(e.target.value)}
           fullWidth
           required
           margin="normal"
         >
           {typesDebtSplit.map((typeSplit, index) => (
-            <MenuItem key={index} value={typeSplit} >
+            <MenuItem key={index} value={typeSplit}>
               {typeSplit}
             </MenuItem>
           ))}
         </TextField>
-        {selectTypeSplit == PERCENTAGES && 
-          DivisionDebt("Porcentaje", "Porcetaje (%)", members, percentageUsers, handlerPercentages)
+        {selectTypeSplit === PERCENTAGES && 
+          DivisionDebt("Porcentaje", "Porcentaje (%)", members, percentageUsers, handlerPercentages)
         }
-        { selectTypeSplit == SPECIFIC_AMOUNTS &&
-          DivisionDebt("Montos Especificos", "Monto ($)", members, debtAmountUsers, handlerAmounts)
+        {selectTypeSplit === SPECIFIC_AMOUNTS &&
+          DivisionDebt("Montos Específicos", "Monto ($)", members, debtAmountUsers, handlerAmounts)
         }
-        
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <Button
           type="submit"
           variant="contained"
