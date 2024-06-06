@@ -6,10 +6,11 @@ import { UseError } from "../hooks/useError";
 export const ViewExpenses = ({ toggleScreen }) => {
     const {error, setError} = UseError();
     const {expenses, getExpenses} = UseManyExpenses(setError);
+
     useEffect(() => {
         getExpenses();
     }, []);
-    // elegir aca el orden si es por fecha por monto o por nombre del gasto. 
+
     const sortedExpenses = expenses.sort((a, b) => new Date(a.date) - new Date(b.date));
     const hasExpenses = sortedExpenses.length > 0;
 
@@ -26,6 +27,7 @@ export const ViewExpenses = ({ toggleScreen }) => {
                                 <TableRow>
                                     <TableCell>Fecha</TableCell>
                                     <TableCell>Nombre</TableCell>
+                                    <TableCell>Categoría</TableCell>
                                     <TableCell align="right">Monto</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -34,6 +36,7 @@ export const ViewExpenses = ({ toggleScreen }) => {
                                     <TableRow key={index}>
                                         <TableCell>{expense.date}</TableCell>
                                         <TableCell>{expense.description}</TableCell>
+                                        <TableCell>{expense.category}</TableCell>
                                         <TableCell align="right">${expense.amount}</TableCell>
                                     </TableRow>
                                 ))}
