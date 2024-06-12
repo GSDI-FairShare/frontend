@@ -9,7 +9,7 @@ export const UseUserName = (setError:any) => {
 
     const isValidUserName = () : boolean => {
         if (userName.trim() === "" || userName.length <= 5 ) {
-            setError("Error: El nombre de usuario tiene que ser mayor a 6 caracteres");
+            setError({ activate: true, message:"Error: El nombre de usuario tiene que ser mayor a 6 caracteres"});
             return false;
           }
         return true;

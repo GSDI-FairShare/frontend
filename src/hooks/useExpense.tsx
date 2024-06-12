@@ -19,10 +19,10 @@ export const UseExpense = (setError:any) => {
 
     const isValidExpense = () :boolean => {
         if(expenseDate=="" || description=="" || amount==0){
-            setError("Error: Todos los campos son obligatorios");
+            setError({ activate: true, message:"Error: Todos los campos son obligatorios"});
             return false;
         } else if (amount < 0) {
-            setError("Error: El monto no puede ser negativo");
+            setError({ activate: true, message:"Error: El monto no puede ser negativo"});
             return false;
         }
         return true;

@@ -17,7 +17,7 @@ export const UseCreateDebt = (setError:any) => {
 
     const isValidInput = () => {
         if( selectedGroupId === '' || debtName === "" || amount <= 0 || date === "" || selectTypeSplit === "" ){
-            setError("Error: Por favor complete todos los campos, ademas el monto debe ser mayor a cero");
+            setError({ activate: true, message:"Error: Por favor complete todos los campos, ademas el monto debe ser mayor a cero"});
             return false;
           }
         return true;

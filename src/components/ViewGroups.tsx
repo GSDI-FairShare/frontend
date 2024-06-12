@@ -19,7 +19,7 @@ export const ViewGroups = () => {
     <Box>
       <h1>Grupos creados</h1>
       {error ? (
-        <center><Typography>{error}</Typography></center>) : groups.length === 0 ?
+        <center><Typography>{error.message}</Typography></center>) : groups.length === 0 ?
         ( <center><Typography>No hay grupos creados.</Typography></center>) : (
         <Box display="flex" flexWrap="wrap" gap={2} >
           {groups.map((group: any) => (

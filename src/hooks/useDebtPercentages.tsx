@@ -24,7 +24,7 @@ export const UseDebtPercentages = (setError:any) => {
         } )
         const result = accumPercentages == 100;
         if(!result){
-            setError("Error.❌ La suma de los porcentajes debe ser 100, por favor revisar 👀 ");
+            setError({ activate: true, message:"Error.❌ La suma de los porcentajes debe ser 100, por favor revisar 👀 "});
         }
         return result;
     }

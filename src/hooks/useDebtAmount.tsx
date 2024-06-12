@@ -25,7 +25,7 @@ export const UseDebtAmount = (setError:any) => {
         const result = accumAmount == amountTotal;
         console.log("accumAmount, amountTotal, result", accumAmount, amountTotal, result);
         if(!result){
-            setError(`Error.❌ La suma de los montos debe ser ${amountTotal} 👀` );
+            setError({ activate: true, message:`Error.❌ La suma de los montos debe ser ${amountTotal} 👀`});
         }
         return result;
     }

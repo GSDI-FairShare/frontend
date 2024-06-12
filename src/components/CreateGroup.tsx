@@ -25,7 +25,7 @@ export const CreateGroup = () => {
       <div>
         <h1>Crear un grupo</h1>
       </div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p style={{ color: 'red' }}>{error.message}</p>}
       <form style={{ marginTop: '0rem' }} onSubmit={handleSubmit}>
         <TextField
           label="Nombre del Grupo"

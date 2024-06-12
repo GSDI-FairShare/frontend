@@ -154,7 +154,7 @@ export const CreateDebt = ({ toggleScreen }: { toggleScreen: any }) => {
         {selectTypeSplit === SPECIFIC_AMOUNTS &&
           DivisionDebt("Montos Específicos", "Monto ($)", members, debtAmountUsers, handlerAmounts)
         }
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p style={{ color: 'red' }}>{error.message}</p>}
         <Button
           type="submit"
           variant="contained"

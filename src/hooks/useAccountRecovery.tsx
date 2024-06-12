@@ -11,14 +11,14 @@ export const UseAccountRecovery = (setError:any) => {
 
     const isValidInput = () => {
         if (inputEmail.includes('@') === false) {
-            setError("Error: El email deberia incluir un @");
+            setError({ activate: true, message:"Error: El email deberia incluir un @"});
             return false;
           }
         return true
     }
     
     const sendMessage = () => {
-        setError("");
+        setError({ activate: false, message:""});
         setMessage("Un enlace para recuperar su contraseña ha sido enviado a su correo electrónico.");
     }
 

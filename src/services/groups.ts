@@ -72,7 +72,7 @@ export const createGroup = async (groupName:string, groupDescription:string,  em
           }
         });
     });
-    setError(null); // Clear previous error messages
+    setError({ activate: true, message:null}); // Clear previous error messages
     return groupResponse;
     } catch( error) {
       handleError("Al Crear un grupo ", error, setError)

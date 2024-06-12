@@ -22,7 +22,7 @@ export const createAExpensePersonal = async (expenseDate:any, description:any, a
         toggleScreen('viewExpenses'); // Navegar a ver gastos después de agregar un nuevo gasto
     } catch(error){
         console.error("Error durante la creación del gasto:", error);
-        setError("Error: ❌ No se pudo crear el gasto. Por favor, inténtelo de nuevo.");
+        setError({ activate: true, message:"Error: ❌ No se pudo crear el gasto. Por favor, inténtelo de nuevo."});
     }
 }
 
@@ -40,7 +40,7 @@ export const getExpensePersonal = async (setError:any) => {
         return response;
     }catch (error){
         console.error("Error al obtener los gastos:", error);
-        setError("Error: ❌ No se pudieron obtener los gastos personales. Por favor, inténtelo de nuevo.");
+        setError({ activate: true, message:"Error: ❌ No se pudieron obtener los gastos personales. Por favor, inténtelo de nuevo."});
     }
 }
 
@@ -50,6 +50,6 @@ export const getCategories = async (setError:any) => {
         return response.data;
     } catch (error) {
         console.error("Error al obtener las categorías:", error);
-        setError("Error: ❌ No se pudieron obtener las categorías. Por favor, inténtelo de nuevo.");
+        setError({ activate: true, message:"Error: ❌ No se pudieron obtener las categorías. Por favor, inténtelo de nuevo."});
     }
 };

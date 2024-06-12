@@ -25,7 +25,7 @@ export const Register = ({ toggleScreen }: { toggleScreen: any }) => {
         <TextField id="inputNameUser" onChange={handlerUserName} label="Me llamo" variant="outlined" size='medium' />
         <TextField id="inputEmail" onChange={handlerEmail} label="Mi email" variant="outlined" />
         <TextField id="inputPassword" onChange={handlerPassword} type='password' label="Mi Contraseña" variant="outlined" />
-        {error && <p className='message_error'>{error}</p>}
+        {error && <p className='message_error'>{error.message}</p>}
         <Button type="submit" size='large' variant="contained">Crear cuenta</Button>
         <Button onClick={() => toggleScreen('login')} size='large' variant="contained">Ya tienes una cuenta? 👉 Inicia sesión</Button>
       </Stack>

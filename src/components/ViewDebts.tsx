@@ -31,7 +31,7 @@ export const ViewDebts = ({ toggleScreen, setSelectedDebt }: { toggleScreen: any
         <center><Typography>No hay deudas creadas.</Typography></center>
       ) : (
         <Box display="flex" flexWrap="wrap" gap={2}>
-          {error && <Typography variant="h6" color="error"> Error: {error} </Typography>}
+          {error && <Typography variant="h6" color="error"> Error: {error.message} </Typography>}
           {debtsFromMyGroups.map((aGroup: any) => (
             <Box key={aGroup.data[0].group_id} mb={2} flex="1 1 300px" maxWidth="calc(100%)">
               <Card>

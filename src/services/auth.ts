@@ -7,7 +7,7 @@ const saveTokenAndSetScreen = (response:AxiosResponse<any, any>, toggleScreen:an
 }
 
 export const registerAUser = async (nameUser:string, inputEmail:string, inputPassword:string, toggleScreen:any, setError:any) => {
-    setError("");
+    setError({ activate: false, message:""});
     try{
       const response = await axios.post('http://0.0.0.0:5000/signup', {
         username: nameUser,
@@ -20,13 +20,13 @@ export const registerAUser = async (nameUser:string, inputEmail:string, inputPas
       });
       saveTokenAndSetScreen(response, toggleScreen)
     } catch(error){
-      setError("Error: Ya se encuentra un usuario con el email registrado, Por favor, inténtelo de nuevo.");
+      setError({ activate: true, message:"Error: Ya se encuentra un usuario con el email registrado, Por favor, inténtelo de nuevo."});
     }
 }
 
 export const loginAUser = async (inputEmail: string, inputPassword: string, toggleScreen: any, setError:any) => {
     try{
-      setError("");
+      setError({ activate: false, message:""});
       const response = await axios.post('http://0.0.0.0:5000/signin', {
         username:inputEmail,
         password:inputPassword
@@ -37,7 +37,7 @@ export const loginAUser = async (inputEmail: string, inputPassword: string, togg
       });
       saveTokenAndSetScreen(response, toggleScreen)
     } catch(error){
-      setError("Error: Email o password incorrectas");
+      setError({ activate: true, message:"Error: Email o password incorrectas"});
     }
 }
 

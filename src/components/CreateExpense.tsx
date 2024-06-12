@@ -56,7 +56,7 @@ export const CreateExpense = ({ toggleScreen }: { toggleScreen: any }) => {
                         ))}
                     </Select>
                 </FormControl>
-                {error && <p className='form__error'>{error}</p>}
+                {error && <p className='form__error'>{error.message}</p>}
                 <Button type='submit' size='large' variant="contained">Agregar Gasto</Button>
             </Stack>
         </form>

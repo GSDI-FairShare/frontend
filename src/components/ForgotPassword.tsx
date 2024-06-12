@@ -22,7 +22,7 @@ export const ForgotPassword = ({ toggleScreen }: { toggleScreen: any }) => {
         <TextField id="inputEmail" onChange={handlerEmail} label="Email" variant="outlined" size='medium' required />
         <Button type='submit' size='large' variant="contained">Enviar</Button>
         <Button onClick={() => toggleScreen('login')} size='large' variant="contained">Volver a Iniciar Sesión</Button>
-        {error && <p className='message_error'>{error}</p>}
+        {error && <p className='message_error'>{error.message}</p>}
         {message && <p className='login__message'>{message}</p>}
       </Stack>
     </form>

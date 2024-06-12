@@ -24,11 +24,11 @@ export const UseGroup = () => {
     
     const isValidInput = (setError:any) :boolean => {
       if (groupName === "" || groupName.length < 5 ){
-        setError("Por favor, ingrese un nombre de grupo con mas de 5 caracteres");
+        setError({ activate: true, message:"Por favor, ingrese un nombre de grupo con mas de 5 caracteres"});
         return false;
       }
       if(emails.length <= 0 ){
-        setError("Por favor, ingrese mas de un mail");
+        setError({ activate: true, message:"Por favor, ingrese mas de un mail"});
         return false
       }
       setEmails(emails.filter( (aEmail) => {return aEmail !== "" && aEmail.includes("@") } ));
