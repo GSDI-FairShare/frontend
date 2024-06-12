@@ -12,6 +12,7 @@ export const ViewDebts = ({ toggleScreen, setSelectedDebt }: { toggleScreen: any
     getAllDebtsFromMyGroups(setError).then((debtsResult: any) => {
       console.log("getAllDebtsFromMyGroups", debtsResult);
       setDebtsFromMyGroups(debtsResult);
+      setError({ activate: false, message: '' })
     });
   }, []);
 
@@ -31,7 +32,7 @@ export const ViewDebts = ({ toggleScreen, setSelectedDebt }: { toggleScreen: any
         <center><Typography>No hay deudas creadas.</Typography></center>
       ) : (
         <Box display="flex" flexWrap="wrap" gap={2}>
-          {error && <Typography variant="h6" color="error"> Error: {error.message} </Typography>}
+          {error.activate && <Typography variant="h6" color="error"> Error: {error.message} </Typography>}
           {debtsFromMyGroups.map((aGroup: any) => (
             <Box key={aGroup.data[0].group_id} mb={2} flex="1 1 300px" maxWidth="calc(100%)">
               <Card>

@@ -7,7 +7,7 @@ export const createAExpensePersonal = async (expenseDate:any, description:any, a
         return;
     }
     try{
-        const response = await axios.post('http://localhost:5000/expenses', {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/expenses`, {
             date: expenseDate,
             description: description,
             amount: Number(amount),
@@ -32,7 +32,7 @@ export const getExpensePersonal = async (setError:any) => {
         return;
     }
     try{
-        const response = await axios.get('http://localhost:5000/expenses', {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/expenses`, {
             headers: {
                 'Authorization': `Bearer ${token}` // Incluir el token en el encabezado de autorización
             }
@@ -46,7 +46,7 @@ export const getExpensePersonal = async (setError:any) => {
 
 export const getCategories = async (setError:any) => {
     try {
-        const response = await axios.get('http://localhost:5000/categories');
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/categories`);
         return response.data;
     } catch (error) {
         console.error("Error al obtener las categorías:", error);

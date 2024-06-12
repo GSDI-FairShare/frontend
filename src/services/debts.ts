@@ -6,7 +6,7 @@ import { getToken } from "../logic/getToken";
 import { EQUITABLE, PERCENTAGES, SPECIFIC_AMOUNTS } from "../constants/constants";
 
 export const createEquitableDebt = async (token:any, selectedGroupId:any, amount:any, debtName:any, date:any, category:any) => {
-    const response = await axios.post(`http://localhost:5000/groups/${selectedGroupId}/expenses`, {
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/groups/${selectedGroupId}/expenses`, {
       amount: amount,
       description: debtName,
       date: date,
@@ -20,7 +20,7 @@ export const createEquitableDebt = async (token:any, selectedGroupId:any, amount
 }
 
 export const createPercentagesDebt = async (token:any, selectedGroupId:any, amount:any, percentageUsers:any, debtName:any, date:any, category:any) => {
-    const response = await axios.post(`http://localhost:5000/groups/${selectedGroupId}/expenses`, {
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/groups/${selectedGroupId}/expenses`, {
       amount: amount,
       description: debtName,
       date: date,
@@ -35,7 +35,7 @@ export const createPercentagesDebt = async (token:any, selectedGroupId:any, amou
 }
 
 export const createAmountDebt = async (token:any, selectedGroupId:any, amount:any, amountsToSend:any, debtName:any, date:any, category:any) => {
-  const response = await axios.post(`http://localhost:5000/groups/${selectedGroupId}/expenses`, {
+  const response = await axios.post(`${process.env.REACT_APP_API_URL}/groups/${selectedGroupId}/expenses`, {
     amount: amount,
     description: debtName,
     date: date,
@@ -75,7 +75,7 @@ export const getAllDebtsFromMyGroups = async (setError:any) => {
     try {
       const groupIds = (await getGroups(setError)).map((aGroup:any) => aGroup.id);
       const allDataAboutDebts = await Promise.all(groupIds.map(async (aGroupId:any) => {
-        const response = await axios.get(`http://localhost:5000/groups/${aGroupId}/expenses`, {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/groups/${aGroupId}/expenses`, {
           headers: {
             'Authorization': `Bearer ${token}` // Include the token in the Authorization header
           }

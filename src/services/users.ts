@@ -8,7 +8,7 @@ export const getUserData = async ( user_id:number ,setError: (error: string) => 
         return
     }
     try{
-      const response = await axios.get(`http://0.0.0.0:5000/users/${user_id}`,{
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/${user_id}`,{
           headers: {
                 'Authorization': `Bearer ${token}`
         }

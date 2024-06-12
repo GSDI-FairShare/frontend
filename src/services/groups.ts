@@ -9,7 +9,7 @@ export const getInfoGroup = async(groupId:number, setError:any) => {
         return
     }
     try{
-      const response = await axios.get(`http://localhost:5000/groups/${groupId}`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/groups/${groupId}`, {
         headers: {
           'Authorization': `Bearer ${token}` // Include the token in the Authorization header
         }
@@ -48,7 +48,7 @@ export const createGroup = async (groupName:string, groupDescription:string,  em
         return
     }
     try{
-      const groupResponse = await axios.post('http://localhost:5000/groups', {
+      const groupResponse = await axios.post(`${process.env.REACT_APP_API_URL}/groups`, {
       name: groupName,
       description: groupDescription
       }, { headers: {
@@ -57,13 +57,13 @@ export const createGroup = async (groupName:string, groupDescription:string,  em
       });
       const groupId = groupResponse.data.id; 
       await emails.map(async (email:any) => {
-        const userResponse = await axios.get(`http://localhost:5000/users/email/${email}`, {
+        const userResponse = await axios.get(`${process.env.REACT_APP_API_URL}/users/email/${email}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
         });
         const userId = userResponse.data.id;
-        return axios.post('http://localhost:5000/group_members', {
+        return axios.post(`${process.env.REACT_APP_API_URL}/group_members`, {
           user_id: userId,
           group_id: groupId
           }, {
@@ -86,7 +86,7 @@ export const getGroups = async (setError:any) => {
         return
     }
     try {
-      const response = await axios.get('http://localhost:5000/groups', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/groups`, {
         headers: {
           'Authorization': `Bearer ${token}` // Include the token in the Authorization header
         }

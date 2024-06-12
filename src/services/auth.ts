@@ -9,7 +9,7 @@ const saveTokenAndSetScreen = (response:AxiosResponse<any, any>, toggleScreen:an
 export const registerAUser = async (nameUser:string, inputEmail:string, inputPassword:string, toggleScreen:any, setError:any) => {
     setError({ activate: false, message:""});
     try{
-      const response = await axios.post('http://0.0.0.0:5000/signup', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/signup`, {
         username: nameUser,
         email: inputEmail,
         password: inputPassword
@@ -27,7 +27,7 @@ export const registerAUser = async (nameUser:string, inputEmail:string, inputPas
 export const loginAUser = async (inputEmail: string, inputPassword: string, toggleScreen: any, setError:any) => {
     try{
       setError({ activate: false, message:""});
-      const response = await axios.post('http://0.0.0.0:5000/signin', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/signin`, {
         username:inputEmail,
         password:inputPassword
       }, {
