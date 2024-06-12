@@ -1,6 +1,6 @@
 import { Toolbar, List, ListItem, ListItemText } from "@mui/material"
 
-export const CustomDrawer = (toggleScreen) => {
+export const CustomDrawer = (toggleScreen:any) => {
     return (    <div>
         <Toolbar/>
         <List>

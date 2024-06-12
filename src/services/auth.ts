@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 
-const saveTokenAndSetScreen = (response:AxiosResponse<any, any>, toggleScreen) => {
+const saveTokenAndSetScreen = (response:AxiosResponse<any, any>, toggleScreen:any) => {
     const token = response.data.access_token;
     localStorage.setItem('token', token); // Guardar el token en localStorage
     toggleScreen('/menu');
 }
 
-export const registerAUser = async (nameUser:string, inputEmail:string, inputPassword:string, toggleScreen, setError) => {
+export const registerAUser = async (nameUser:string, inputEmail:string, inputPassword:string, toggleScreen:any, setError:any) => {
     setError("");
     try{
       const response = await axios.post('http://0.0.0.0:5000/signup', {
@@ -24,7 +24,7 @@ export const registerAUser = async (nameUser:string, inputEmail:string, inputPas
     }
 }
 
-export const loginAUser = async (inputEmail: string, inputPassword: string, toggleScreen: any, setError) => {
+export const loginAUser = async (inputEmail: string, inputPassword: string, toggleScreen: any, setError:any) => {
     try{
       setError("");
       const response = await axios.post('http://0.0.0.0:5000/signin', {

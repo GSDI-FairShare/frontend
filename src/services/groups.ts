@@ -3,7 +3,7 @@ import { getUserData } from "./users";
 import { getToken } from "../logic/getToken";
 import { handleError } from "../logic/handleError";
 
-export const getInfoGroup = async(groupId:number, setError) => {
+export const getInfoGroup = async(groupId:number, setError:any) => {
     const {isValid, token} = getToken();
     if (!isValid){
         return
@@ -21,14 +21,14 @@ export const getInfoGroup = async(groupId:number, setError) => {
     }
 }
 
-export const getInfoAboutAGroupAnHisMembers = async (groupId:number, setError) => {
+export const getInfoAboutAGroupAnHisMembers = async (groupId:number, setError:any) => {
     const {isValid} = getToken();
     if (!isValid){
         return
     }
     try{
       const resultInfoGroup = await getInfoGroup(Number(groupId), setError);
-      await Promise.all(resultInfoGroup.members.map( async (aMember) => {
+      await Promise.all(resultInfoGroup.members.map( async (aMember:any) => {
           const dataMember = await getUserData(aMember.user_id, setError);
           console.log("dataMember", dataMember);
           aMember.username = dataMember.username;
@@ -42,7 +42,7 @@ export const getInfoAboutAGroupAnHisMembers = async (groupId:number, setError) =
 
 
 
-export const createGroup = async (groupName:string, groupDescription:string,  emails, setError) => {
+export const createGroup = async (groupName:string, groupDescription:string,  emails:any, setError:any) => {
     const {isValid, token} = getToken();
     if (!isValid){
         return
@@ -56,7 +56,7 @@ export const createGroup = async (groupName:string, groupDescription:string,  em
         }
       });
       const groupId = groupResponse.data.id; 
-      await emails.map(async email => {
+      await emails.map(async (email:any) => {
         const userResponse = await axios.get(`http://localhost:5000/users/email/${email}`, {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -80,7 +80,7 @@ export const createGroup = async (groupName:string, groupDescription:string,  em
 }
 
 
-export const getGroups = async (setError) => {
+export const getGroups = async (setError:any) => {
     const {isValid, token} = getToken();
     if (!isValid){
         return
@@ -99,7 +99,7 @@ export const getGroups = async (setError) => {
 }
 
 
-export const getDataOfMyGroupsAndHisMembers = async (setError) => {
+export const getDataOfMyGroupsAndHisMembers = async (setError:any) => {
     const {isValid} = getToken();
     if (!isValid){
         return
@@ -107,8 +107,8 @@ export const getDataOfMyGroupsAndHisMembers = async (setError) => {
     try{
       const allMyGroups = await getGroups(setError);
       console.log("allMyGroups--  🎲 : ", allMyGroups);
-      const dataTeams = await Promise.all(allMyGroups.map( async (aGroup) => {
-          const members = await Promise.all(aGroup.members.map( async (aMember) => {
+      const dataTeams = await Promise.all(allMyGroups.map( async (aGroup:any) => {
+          const members = await Promise.all(aGroup.members.map( async (aMember:any) => {
             const userData = await getUserData(aMember.user_id, setError);
             return {name: userData.username, email: userData.email};
           }));

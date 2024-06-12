@@ -9,7 +9,7 @@ import { PayDebt } from './PayDebt';
 import { CustomDrawer } from './CustomDrawer';
 const drawerWidth = 240;
 
-export const MainLayout = ({ screen, toggleScreen }) => {
+export const MainLayout = ({ screen, toggleScreen }: { screen:any, toggleScreen: any }) => {
   return (
     <div>
       <AppBar position="fixed" style={{ zIndex: 1400 }}>
@@ -25,9 +25,9 @@ export const MainLayout = ({ screen, toggleScreen }) => {
       <main style={{ flexGrow: 1, padding: '3rem', marginLeft: `${drawerWidth}px`, marginTop: '2rem' }}>
         <div style={{ width: '100%' }}>
           {screen === 'createExpense' && <CreateExpense toggleScreen={toggleScreen} />}
-          {screen === 'viewExpenses' && <ViewExpenses toggleScreen={toggleScreen} />}
-          {screen === 'createGroup' && <CreateGroup  toggleScreen={toggleScreen} />}
-          {screen === 'viewGroups' && <ViewGroups toggleScreen={toggleScreen} />}
+          {screen === 'viewExpenses' && <ViewExpenses />}
+          {screen === 'createGroup' && <CreateGroup />}
+          {screen === 'viewGroups' && <ViewGroups />}
           {screen === 'createDebt' && <CreateDebt toggleScreen={toggleScreen}  />}
           {screen === 'viewDebts' && <ViewDebts toggleScreen={toggleScreen} />}
           {screen === 'payDebt' && <PayDebt toggleScreen={toggleScreen} />}

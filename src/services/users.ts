@@ -2,7 +2,7 @@ import axios from "axios";
 import { handleError } from "../logic/handleError";
 import { getToken } from "../logic/getToken";
 
-export const getUserData = async ( user_id:number ,setError) => {
+export const getUserData = async ( user_id:number ,setError: (error: string) => void) => {
     const {isValid, token} = getToken();
     if (!isValid){
         return

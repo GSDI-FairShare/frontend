@@ -5,12 +5,12 @@ import { registerAUser } from "../services/auth";
 import { UseUserName } from "../hooks/useUserName";
 import { UseError } from "../hooks/useError";
 
-export const Register = ({ toggleScreen }) => {
+export const Register = ({ toggleScreen }: { toggleScreen: any }) => {
   const {error, setError} = UseError();
   const {userName, handlerUserName, isValidUserName} = UseUserName(setError);
   const {inputEmail, inputPassword, handlerEmail, handlerPassword, isValidBasicEmailPassword } = UseEmailAndPassword(setError);
   
-  const handlerSubmit = async (event) => {
+  const handlerSubmit = async (event:any) => {
     event.preventDefault();
     if (! isValidBasicEmailPassword() || !isValidUserName()){
       return;

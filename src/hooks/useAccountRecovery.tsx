@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-export const UseAccountRecovery = (setError) => {
+export const UseAccountRecovery = (setError:any) => {
     const [inputEmail, setInputEmail] = useState("");
     const [message, setMessage] = useState("");
 
-    const handlerEmail = (event) => {
+    const handlerEmail = (event:any) => {
         const newInput = event.target.value;
         setInputEmail(newInput);
     };

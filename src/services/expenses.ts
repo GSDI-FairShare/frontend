@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getToken } from "../logic/getToken";
 
-export const createAExpensePersonal = async (expenseDate, description, amount, category, setError, toggleScreen) => {
+export const createAExpensePersonal = async (expenseDate:any, description:any, amount:any, category:any, setError:any, toggleScreen:any) => {
     const {isValid, token} = getToken();
     if (!isValid){
         return;
@@ -26,7 +26,7 @@ export const createAExpensePersonal = async (expenseDate, description, amount, c
     }
 }
 
-export const getExpensePersonal = async (setError) => {
+export const getExpensePersonal = async (setError:any) => {
     const {isValid, token} = getToken();
     if (!isValid){
         return;
@@ -44,7 +44,7 @@ export const getExpensePersonal = async (setError) => {
     }
 }
 
-export const getCategories = async (setError) => {
+export const getCategories = async (setError:any) => {
     try {
         const response = await axios.get('http://localhost:5000/categories');
         return response.data;

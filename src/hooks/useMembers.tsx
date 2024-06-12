@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { getInfoAboutAGroupAnHisMembers } from "../services/groups";
 
-export const UseMembers = (setError) => {
+export const UseMembers = (setError:any) => {
     const [members, setMembers] = useState([]);
     
     const getInfoAboutAGroup = async (groupId:string) => {

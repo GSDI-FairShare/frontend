@@ -4,13 +4,13 @@ import { UseGroup } from '../hooks/useGroup';
 import { createGroup } from '../services/groups';
 import { UseError } from '../hooks/useError';
 
-export const CreateGroup = ({ toggleScreen }) => {
+export const CreateGroup = () => {
   const {error, setError} = UseError();
   const {groupName, emails, setGroupName,  handleAddEmailField,
          handleEmailChange, handleRemoveEmailField, resetFields,
          isValidInput, groupDescription, setGroupDescription } = UseGroup();
   
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     if(!isValidInput(setError)){
       return;

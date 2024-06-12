@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const UseCreateDebt = (setError) => {
+export const UseCreateDebt = (setError:any) => {
     const [debtName, setDebtName] = useState('');
     const [selectedGroupId, setSelectedGroupId] = useState('');
     const [amount, setAmount] = useState(0);

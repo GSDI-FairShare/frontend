@@ -1,6 +1,6 @@
 import { TextField, Button, Box } from '@mui/material';
 
-export const PayDebt = ({toggleScreen }) => {
+export const PayDebt = ({ toggleScreen }: { toggleScreen: any }) => {
   const handlePay = () => {
     alert(`Deuda ${selectedDebt.name} pagada con éxito.`);
     toggleScreen('viewDebts');

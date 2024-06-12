@@ -5,7 +5,7 @@ export const UseGroup = () => {
     const [groupDescription, setGroupDescription] = useState('');
     const [emails, setEmails] = useState(['']);
 
-    const handleEmailChange = (index, event) => {
+    const handleEmailChange = (index:any, event:any) => {
         const newEmails = [...emails];
         newEmails[index] = event.target.value;
         setEmails(newEmails);
@@ -15,14 +15,14 @@ export const UseGroup = () => {
       setEmails([...emails, '']);
     };
 
-    const handleRemoveEmailField = (index) => {
+    const handleRemoveEmailField = (index:any) => {
       const newEmails = [...emails];
       const removeEmails = newEmails.splice(index, 1);
       console.log("removeEmails", removeEmails);
       setEmails(newEmails);
     };
     
-    const isValidInput = (setError) :boolean => {
+    const isValidInput = (setError:any) :boolean => {
       if (groupName === "" || groupName.length < 5 ){
         setError("Por favor, ingrese un nombre de grupo con mas de 5 caracteres");
         return false;

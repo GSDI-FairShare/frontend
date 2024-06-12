@@ -1,12 +1,12 @@
 import { Box, Card, CardContent, Typography, TextField, Divider } from "@mui/material"
 
-export const DivisionDebt = (title:string, subTitle:string, members, debtUsers, handlerDebt) => {
+export const DivisionDebt = (title:string, subTitle:string, members:any, debtUsers:any, handlerDebt:any) => {
     return (
     <Box>
         <Card sx={{mt : 3, boxShadow: 5}}>
           <CardContent>
               <Typography variant="h4"> {title} </Typography>
-                {members.map( (aMember, index) => { return <Box key={index}>
+                {members.map( (aMember:any, index:any) => { return <Box key={index}>
                 <Box display="flex" alignItems="center" sx={{mb: 2}}> 
                     <Box flex={1}>
                         <Typography variant="h5" gutterBottom> {aMember.username} </Typography>

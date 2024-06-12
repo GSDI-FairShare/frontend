@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-export const UseUserName = (setError) => {
+export const UseUserName = (setError:any) => {
     const [userName, setUserName] = useState('');
-    const handlerUserName = (event) => {
+    const handlerUserName = (event:any) => {
         const newInput = event.target.value;
         setUserName(newInput);
     };

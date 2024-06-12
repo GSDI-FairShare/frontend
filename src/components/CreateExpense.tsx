@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, Stack, TextField, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { UseExpense } from "../hooks/useExpense";
 import { createAExpensePersonal, getCategories } from "../services/expenses";
 import "../styles/createExpenses.css";
 import { UseError } from "../hooks/useError";
 
-export const CreateExpense = ({ toggleScreen }) => {
+export const CreateExpense = ({ toggleScreen }: { toggleScreen: any }) => {
     const { error, setError } = UseError();
     const { expenseDate, description, amount, handleDateChange, handleDescriptionChange, handleAmountChange, isValidExpense } = UseExpense(setError);
     const [categories, setCategories] = useState([]);
@@ -21,7 +21,7 @@ export const CreateExpense = ({ toggleScreen }) => {
         fetchCategories();
     }, []);
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event:any) => {
         event.preventDefault();
         if (!isValidExpense()) {
             return;
@@ -29,7 +29,7 @@ export const CreateExpense = ({ toggleScreen }) => {
         createAExpensePersonal(expenseDate, description, amount, selectedCategory, setError, toggleScreen);
     };
 
-    const handleCategoryChange = (event) => {
+    const handleCategoryChange = (event:any) => {
         setSelectedCategory(event.target.value);
     };
 

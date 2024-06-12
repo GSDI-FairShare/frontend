@@ -1,14 +1,15 @@
 import { useState } from "react";
 
-export const UseDebtAmount = (setError) => {
+export const UseDebtAmount = (setError:any) => {
     const [debtAmountUsers, setDebtAmountUsers] = useState({});
     
-    const initializeUserAmounts = (resultInfoGroup) => {
-        const initialAmounts = {}
-        resultInfoGroup.members.forEach( (aMember) => { initialAmounts[aMember.user_id] = 0})
+    const initializeUserAmounts = (resultInfoGroup: any) => {
+        const initialAmounts: { [key: string]: any } = {};
+        resultInfoGroup.members.forEach((aMember: any) => {
+            initialAmounts[aMember.user_id] = 0;
+        });
         setDebtAmountUsers(initialAmounts);
-    }
-
+    };
     const handlerAmounts = (aUserId:number, aNewAmount:number) => {
         setDebtAmountUsers( (prevState) => {
             return { ...prevState, [aUserId]: aNewAmount }
@@ -31,16 +32,16 @@ export const UseDebtAmount = (setError) => {
 
     const getAmountToSend = (amountTotal: number) => {
         const entries = Object.entries(debtAmountUsers);
-        const amountToPercentages = entries.map( ([userId, aMount]) => {
-            const divisionAux = (aMount/amountTotal)*100;
-            const finalAmount = Math.round(divisionAux * 100)/100
-            return {user_id: userId, percentage: finalAmount } 
+        const amountToPercentages = entries.map(([userId, aMount]: [string, any]) => {
+            const divisionAux = (aMount / amountTotal) * 100;
+            const finalAmount = Math.round(divisionAux * 100) / 100;
+            return { user_id: userId, percentage: finalAmount };
         });
         const sumRoundedPercentages = amountToPercentages.reduce((sum, entry) => sum + entry.percentage, 0);
         const difference = Math.round((100 - sumRoundedPercentages) * 100) / 100;
         amountToPercentages[amountToPercentages.length - 1].percentage += difference;
         return amountToPercentages;
-    }
+    };
 
     return {debtAmountUsers, initializeUserAmounts, handlerAmounts, areValidAmounts, getAmountToSend}
 }

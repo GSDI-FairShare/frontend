@@ -3,11 +3,11 @@ import "../styles/login.css";
 import { UseAccountRecovery } from "../hooks/useAccountRecovery";
 import { UseError } from "../hooks/useError";
 
-export const ForgotPassword = ({ toggleScreen }) => {
+export const ForgotPassword = ({ toggleScreen }: { toggleScreen: any }) => {
   const {error, setError} = UseError();
   const {sendMessage, handlerEmail, isValidInput, message} = UseAccountRecovery(setError);
   
-  const handlerSubmit = (event) => {
+  const handlerSubmit = (event:any) => {
     event.preventDefault();
     if (!isValidInput()) {
       return;

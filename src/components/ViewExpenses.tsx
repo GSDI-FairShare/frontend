@@ -3,15 +3,16 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { UseManyExpenses } from "../hooks/useManyExpenses";
 import { UseError } from "../hooks/useError";
 
-export const ViewExpenses = ({ toggleScreen }) => {
-    const {error, setError} = UseError();
-    const {expenses, getExpenses} = UseManyExpenses(setError);
+export const ViewExpenses = ({ }) => {
+    const { error, setError } = UseError();
+    const { expenses, getExpenses } = UseManyExpenses(setError);
 
     useEffect(() => {
         getExpenses();
     }, []);
 
-    const sortedExpenses = expenses.sort((a, b) => new Date(a.date) - new Date(b.date));
+    const sortedExpenses = expenses.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
     const hasExpenses = sortedExpenses.length > 0;
 
     return (
@@ -32,7 +33,7 @@ export const ViewExpenses = ({ toggleScreen }) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {sortedExpenses.map((expense, index) => (
+                                {sortedExpenses.map((expense: any, index: number) => (
                                     <TableRow key={index}>
                                         <TableCell>{expense.date}</TableCell>
                                         <TableCell>{expense.description}</TableCell>

@@ -1,19 +1,19 @@
 import { useState } from "react";
 
-export const UseExpense = (setError) => {
+export const UseExpense = (setError:any) => {
     const [expenseDate, setExpenseDate] = useState('');
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState(0);
     
-    const handleDateChange = (event) => {
+    const handleDateChange = (event:any) => {
         setExpenseDate(event.target.value);
     };
 
-    const handleDescriptionChange = (event) => {
+    const handleDescriptionChange = (event:any) => {
         setDescription(event.target.value);
     };
 
-    const handleAmountChange = (event) => {
+    const handleAmountChange = (event:any) => {
         setAmount(event.target.value);
     };
 

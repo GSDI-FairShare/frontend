@@ -1,13 +1,15 @@
 import { useState } from "react";
 
-export const UseDebtPercentages = (setError) => {
+export const UseDebtPercentages = (setError:any) => {
     const [percentageUsers, setPercentageUser] = useState({});
     
-    const initializeUserPercentages = (resultInfoGroup) => {
-        const initialPercentages = {}
-        resultInfoGroup.members.forEach( (aMember) => { initialPercentages[aMember.user_id] = 0})
+    const initializeUserPercentages = (resultInfoGroup: any) => {
+        const initialPercentages: { [key: string]: any } = {};
+        resultInfoGroup.members.forEach((aMember: any) => {
+            initialPercentages[aMember.user_id] = 0;
+        });
         setPercentageUser(initialPercentages);
-    }
+    };
 
     const handlerPercentages = (aUserId:number, aNewPercentage:number) => {
         setPercentageUser( (prevState) => {

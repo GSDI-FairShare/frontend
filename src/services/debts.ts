@@ -5,7 +5,7 @@ import { handleError } from "../logic/handleError";
 import { getToken } from "../logic/getToken";
 import { EQUITABLE, PERCENTAGES, SPECIFIC_AMOUNTS } from "../constants/constants";
 
-export const createEquitableDebt = async (token, selectedGroupId, amount, debtName, date, category) => {
+export const createEquitableDebt = async (token:any, selectedGroupId:any, amount:any, debtName:any, date:any, category:any) => {
     const response = await axios.post(`http://localhost:5000/groups/${selectedGroupId}/expenses`, {
       amount: amount,
       description: debtName,
@@ -19,7 +19,7 @@ export const createEquitableDebt = async (token, selectedGroupId, amount, debtNa
     return response;
 }
 
-export const createPercentagesDebt = async (token, selectedGroupId, amount, percentageUsers, debtName, date, category) => {
+export const createPercentagesDebt = async (token:any, selectedGroupId:any, amount:any, percentageUsers:any, debtName:any, date:any, category:any) => {
     const response = await axios.post(`http://localhost:5000/groups/${selectedGroupId}/expenses`, {
       amount: amount,
       description: debtName,
@@ -34,7 +34,7 @@ export const createPercentagesDebt = async (token, selectedGroupId, amount, perc
     return response;
 }
 
-export const createAmountDebt = async (token, selectedGroupId, amount, amountsToSend, debtName, date, category) => {
+export const createAmountDebt = async (token:any, selectedGroupId:any, amount:any, amountsToSend:any, debtName:any, date:any, category:any) => {
   const response = await axios.post(`http://localhost:5000/groups/${selectedGroupId}/expenses`, {
     amount: amount,
     description: debtName,
@@ -49,7 +49,7 @@ export const createAmountDebt = async (token, selectedGroupId, amount, amountsTo
   return response;
 }
 
-export const createDebt = async (selectTypeSplit, percentageUsers, amountsToSend, selectedGroupId, debtName, amount, date, category, setError) => {
+export const createDebt = async (selectTypeSplit:any, percentageUsers:any, amountsToSend:any, selectedGroupId:any, debtName:any, amount:any, date:any, category:any, setError:any) => {
     const {isValid, token} = getToken();
     if (!isValid){
         return;
@@ -67,14 +67,14 @@ export const createDebt = async (selectTypeSplit, percentageUsers, amountsToSend
     }
 }
 
-export const getAllDebtsFromMyGroups = async (setError) => {
+export const getAllDebtsFromMyGroups = async (setError:any) => {
     const {isValid, token} = getToken();
     if (!isValid){
         return;
     }
     try {
-      const groupIds = (await getGroups(setError)).map(aGroup => aGroup.id);
-      const allDataAboutDebts = await Promise.all(groupIds.map(async (aGroupId) => {
+      const groupIds = (await getGroups(setError)).map((aGroup:any) => aGroup.id);
+      const allDataAboutDebts = await Promise.all(groupIds.map(async (aGroupId:any) => {
         const response = await axios.get(`http://localhost:5000/groups/${aGroupId}/expenses`, {
           headers: {
             'Authorization': `Bearer ${token}` // Include the token in the Authorization header
@@ -88,10 +88,10 @@ export const getAllDebtsFromMyGroups = async (setError) => {
       // Add group info (name and description) and each user's info (name and email)
       await Promise.all(filterDataDebts.map(async (aGroup) => {
         const infoGroup = await getInfoGroup(aGroup.data[0].group_id, setError);
-        await Promise.all(aGroup.data.map(async (aDebt) => {
+        await Promise.all(aGroup.data.map(async (aDebt:any) => {
           aDebt.name = infoGroup.name;
           aDebt.groupDescription = infoGroup.description;
-          await Promise.all(aDebt.splits.map(async (aUser) => {
+          await Promise.all(aDebt.splits.map(async (aUser:any) => {
             const userDataInfo = await getUserData(aUser.user_id, setError);
             aUser.name = userDataInfo.username;
             aUser.email = userDataInfo.email;

@@ -1,15 +1,15 @@
 import { useState } from "react";
 
-export const UseEmailAndPassword = (setError) => {
+export const UseEmailAndPassword = (setError:any) => {
     const [inputEmail, setInputEmail] = useState('');
     const [inputPassword, setInputPassword] = useState('');
     
-    const handlerEmail = (event) => {
+    const handlerEmail = (event:any) => {
         const newInput = event.target.value;
         setInputEmail(newInput);
     };
     
-    const handlerPassword = (event) => {
+    const handlerPassword = (event:any) => {
         const newInput = event.target.value;
         setInputPassword(newInput);
     };

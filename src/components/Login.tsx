@@ -4,12 +4,12 @@ import { UseEmailAndPassword } from "../hooks/useEmailPassword";
 import { loginAUser } from "../services/auth";
 import { UseError } from "../hooks/useError";
 
-export const Login = ({ toggleScreen }) => {
+export const Login = ({ toggleScreen }: { toggleScreen: any }) => {
   const {error, setError} = UseError();
   const {inputEmail, inputPassword, handlerEmail,
       handlerPassword, isValidBasicEmailPassword } = UseEmailAndPassword(setError);
   
-  const handlerSubmit = async (event) => {
+  const handlerSubmit = async (event:any) => {
     event.preventDefault();
     if (!isValidBasicEmailPassword()){
       return;

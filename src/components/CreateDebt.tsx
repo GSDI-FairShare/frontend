@@ -12,7 +12,7 @@ import { UseDebtPercentages } from '../hooks/useDebtPercentages';
 import { UseDebtAmount } from '../hooks/useDebtAmount';
 import { DivisionDebt } from './DivisionDebt';
 
-export const CreateDebt = ({ toggleScreen }) => {
+export const CreateDebt = ({ toggleScreen }: { toggleScreen: any }) => {
   const {error, setError} = UseError();
   const {debtName, setDebtName, selectedGroupId, setSelectedGroupId,
         amount, setAmount, date, setDate, resetFields, isValidInput,
@@ -49,7 +49,7 @@ export const CreateDebt = ({ toggleScreen }) => {
     }
   }, [selectTypeSplit, selectedGroupId]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     if (!isValidInput() || (selectTypeSplit === PERCENTAGES && !areValidPercentages()) || (selectTypeSplit === SPECIFIC_AMOUNTS && !areValidAmounts(amount))) {
       return;
@@ -66,7 +66,7 @@ export const CreateDebt = ({ toggleScreen }) => {
     toggleScreen('viewDebts');
   };
 
-  const handleCategoryChange = (e) => {
+  const handleCategoryChange = (e:any) => {
     setSelectedCategory(e.target.value);
   };
 
@@ -91,7 +91,7 @@ export const CreateDebt = ({ toggleScreen }) => {
           required
           margin="normal"
         >
-          {groups.map((group, index) => (
+          {groups.map((group:any, index) => (
             <MenuItem key={index} value={group.id}>
               {group.name}
             </MenuItem>
@@ -100,7 +100,7 @@ export const CreateDebt = ({ toggleScreen }) => {
         <TextField
           label="Monto"
           value={amount}
-          onChange={(e) => setAmount(e.target.value)}
+          onChange={(e:any) => setAmount(e.target.value)}
           fullWidth
           required
           margin="normal"

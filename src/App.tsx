@@ -7,7 +7,7 @@ import "./styles/app.css"
 
 const App = () => {
   const navigate = useNavigate();
-  const toggleScreen = (screenName) => {
+  const toggleScreen = (screenName:any) => {
     navigate(screenName);
   };
 
