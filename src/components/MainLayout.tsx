@@ -1,4 +1,5 @@
-import { Drawer, AppBar, Toolbar, Typography} from '@mui/material';
+import { useState } from 'react';  // Importar useState
+import { Drawer, AppBar, Toolbar, Typography } from '@mui/material';
 import { CreateExpense } from './CreateExpense';
 import { ViewExpenses } from './ViewExpenses';
 import { CreateGroup } from './CreateGroup';
@@ -9,7 +10,9 @@ import { PayDebt } from './PayDebt';
 import { CustomDrawer } from './CustomDrawer';
 const drawerWidth = 240;
 
-export const MainLayout = ({ screen, toggleScreen }: { screen:any, toggleScreen: any }) => {
+export const MainLayout = ({ screen, toggleScreen }: { screen: any, toggleScreen: any }) => {
+  const [selectedDebt, setSelectedDebt] = useState(null); // Agregar estado selectedDebt
+
   return (
     <div>
       <AppBar position="fixed" style={{ zIndex: 1400 }}>
@@ -28,9 +31,9 @@ export const MainLayout = ({ screen, toggleScreen }: { screen:any, toggleScreen:
           {screen === 'viewExpenses' && <ViewExpenses />}
           {screen === 'createGroup' && <CreateGroup />}
           {screen === 'viewGroups' && <ViewGroups />}
-          {screen === 'createDebt' && <CreateDebt toggleScreen={toggleScreen}  />}
-          {screen === 'viewDebts' && <ViewDebts toggleScreen={toggleScreen} />}
-          {screen === 'payDebt' && <PayDebt toggleScreen={toggleScreen} />}
+          {screen === 'createDebt' && <CreateDebt toggleScreen={toggleScreen} />}
+          {screen === 'viewDebts' && <ViewDebts toggleScreen={toggleScreen} setSelectedDebt={setSelectedDebt} />}
+          {screen === 'payDebt' && <PayDebt toggleScreen={toggleScreen} selectedDebt={selectedDebt} />}
         </div>
       </main>
     </div>
